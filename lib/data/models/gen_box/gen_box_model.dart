@@ -1,13 +1,28 @@
+import 'package:flutter/material.dart';
+
+
 class GenBox {
   final String name;
-  final String? fieldLabel;
-  final void Function(String value)? onPressed;
   final String iconPath;
+  final Widget generateContainer;
 
   GenBox({
     required this.name,
-    this.fieldLabel,
-    this.onPressed,
     required this.iconPath,
+    required this.generateContainer,
+  });
+}
+
+
+class SingleFieldBox extends GenBox {
+  final String fieldLabel;
+  final String hintText;
+
+  SingleFieldBox({
+    required super.name,
+    required this.fieldLabel,
+    required this.hintText,
+    required super.generateContainer,
+    required super.iconPath,
   });
 }

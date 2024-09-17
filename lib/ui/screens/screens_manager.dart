@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_scanner_app/blocs/navigation_bar/navigation_bar_cubit.dart';
-import 'package:qr_code_scanner_app/ui/screens/pages/generate/generate_page.dart';
+import 'package:qr_code_scanner_app/ui/screens/pages/generate/generate_items/generate_page.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/history/history_page.dart';
-import 'package:qr_code_scanner_app/ui/screens/pages/scanner/scanner_page.dart';
+import 'package:qr_code_scanner_app/ui/screens/pages/scanner/scanner_page/scanner_page.dart';
 
 class ScreensManager extends StatelessWidget {
   ScreensManager({super.key});
@@ -18,6 +18,7 @@ class ScreensManager extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.transparent,
       bottomNavigationBar: const BottomAppBar(
         height: 100,
         color: Color(0xff333333),

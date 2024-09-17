@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_app/data/models/gen_box/gen_box_model.dart';
 import 'package:qr_code_scanner_app/data/repositories/gen_qr_repository.dart';
+import 'package:qr_code_scanner_app/ui/screens/pages/generate/generate_page/qr_generate_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 class GeneratePage extends StatelessWidget {
@@ -10,7 +11,6 @@ class GeneratePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff333333).withOpacity(0.87),
       appBar: AppBar(
         title: Text(
           "Generate QR",
@@ -32,7 +32,15 @@ class GeneratePage extends StatelessWidget {
           GenBox genBox = genQrTypes.genBoxes[index];
           return InkWell(
             onTap: () {
-              //  Navigator.push(context, MaterialPageRoute(builder: (context) => )
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QrGeneratePage(
+                    genBox: genBox,
+                    generateContainer: genBox.generateContainer,
+                  ),
+                ),
+              );
             },
             borderRadius: BorderRadius.circular(15),
             child: Ink(
@@ -60,5 +68,4 @@ class GeneratePage extends StatelessWidget {
       ),
     );
   }
-  
 }

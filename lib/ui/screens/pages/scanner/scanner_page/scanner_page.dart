@@ -8,7 +8,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_code_scanner_app/blocs/history/history_bloc.dart';
 import 'package:qr_code_scanner_app/blocs/history/history_event.dart';
 import 'package:qr_code_scanner_app/blocs/size_scanner/overlay_cubit.dart';
-import 'package:qr_code_scanner_app/ui/screens/pages/scanner/result_page.dart';
+import 'package:qr_code_scanner_app/ui/screens/pages/scanner/result_page/result_page.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/scanner/widgets/zoom_slider.dart';
 import 'package:qr_code_scanner_app/utils/di.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
