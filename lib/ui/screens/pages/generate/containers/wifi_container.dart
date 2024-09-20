@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/blocs/history/history_bloc.dart';
+import 'package:qr_code_scanner_app/blocs/history/history_event.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/generate/widgets/custom_textfield.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/generate/widgets/generate_button.dart';
+import 'package:qr_code_scanner_app/ui/screens/pages/scanner/result_page/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 class WifiContainer extends StatefulWidget {
@@ -25,16 +29,6 @@ class _WifiContainerState extends State<WifiContainer> {
     networkNameController.dispose();
     passwordController.dispose();
     super.dispose();
-  }
-
-  void _generateWiFiQRCode() {
-    // Har bir TextField dan textni olish
-    String networkName = networkNameController.text;
-    String password = passwordController.text;
-
-    // Olingan textlarni ishlatishingiz mumkin
-    print('Network Name (SSID): $networkName');
-    print('Password: $password');
   }
 
   @override
@@ -65,7 +59,26 @@ class _WifiContainerState extends State<WifiContainer> {
               controller: passwordController,
               hintText: 'Enter password',
             ),
-            GenerateButton(onPressed: _generateWiFiQRCode),
+            GenerateButton(onPressed: () {
+              String data =
+                  'WIFI:T:N/A;P:${passwordController.text};S:${networkNameController.text};';
+
+              BlocProvider.of<HistoryBloc>(context).add(
+                AddHistoryEvent(
+                  code: data,
+                  isGenerated: true,
+                ),
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultPage(
+                    qrCode: data,
+                    isGenerated: false,
+                  ),
+                ),
+              );
+            }),
           ],
         ),
       ),

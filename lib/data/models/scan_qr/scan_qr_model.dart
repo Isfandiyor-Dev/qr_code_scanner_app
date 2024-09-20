@@ -1,21 +1,18 @@
-class ScanQrModel {
+class QrModel {
   int id;
   String code;
   DateTime scannetAt;
+  bool isGenerated;
 
-  ScanQrModel(
-    this.id,
-    this.code,
-    this.scannetAt,
-  );
+  QrModel(this.id, this.code, this.scannetAt, this.isGenerated);
 
   // JSON dan obyekt yaratish
-  factory ScanQrModel.fromJson(Map<String, dynamic> json) {
-    return ScanQrModel(
-      json['id'] as int,
-      json['code'] as String,
-      DateTime.parse(json['scannetAt'] as String), // String to DateTime
-    );
+  factory QrModel.fromJson(Map<String, dynamic> json) {
+    return QrModel(
+        json['id'] as int,
+        json['code'] as String,
+        DateTime.parse(json['scannetAt'] as String),
+        (json['isGenerated']) == 1);
   }
 
   // Obyektdan JSON yaratish
@@ -23,7 +20,8 @@ class ScanQrModel {
     return {
       'id': id,
       'code': code,
-      'scannetAt': scannetAt.toIso8601String(), // DateTime to String
+      'scannetAt': scannetAt.toIso8601String(),
+      'isGenerated': isGenerated ? 1 : 0,
     };
   }
 }

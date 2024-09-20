@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/blocs/history/history_bloc.dart';
+import 'package:qr_code_scanner_app/blocs/history/history_event.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/generate/widgets/custom_textfield.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/generate/widgets/generate_button.dart';
+import 'package:qr_code_scanner_app/ui/screens/pages/scanner/result_page/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 class LocationContainer extends StatefulWidget {
@@ -78,7 +84,32 @@ class _LocationContainerState extends State<LocationContainer> {
             hintText: "",
           ),
           const SizedBox(height: 20),
-          GenerateButton(onPressed: () {}),
+          GenerateButton(onPressed: () {
+            Map<String, dynamic> data = {
+              "Location Name": locationNameController.text,
+              "Latitude": latitudeController.text,
+              "Longitude": longitudeController.text,
+              "Postal Code": postalCodeController.text,
+              "State": stateController.text,
+              "Country": countryController.text,
+            };
+
+            BlocProvider.of<HistoryBloc>(context).add(
+              AddHistoryEvent(
+                code: jsonEncode(data),
+                isGenerated: true,
+              ),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResultPage(
+                  qrCode: jsonEncode(data),
+                  isGenerated: true,
+                ),
+              ),
+            );
+          }),
         ],
       ),
     );

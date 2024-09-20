@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/blocs/history/history_bloc.dart';
+import 'package:qr_code_scanner_app/blocs/history/history_event.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/generate/widgets/custom_textfield.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/generate/widgets/generate_button.dart';
+import 'package:qr_code_scanner_app/ui/screens/pages/scanner/result_page/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 class SingleFieldContainer extends StatelessWidget {
@@ -40,7 +44,23 @@ class SingleFieldContainer extends StatelessWidget {
             hintText: "",
           ),
           GenerateButton(
-            onPressed: () {},
+            onPressed: () {
+              BlocProvider.of<HistoryBloc>(context).add(
+                AddHistoryEvent(
+                  code: textController.text,
+                  isGenerated: true,
+                ),
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultPage(
+                    qrCode: textController.text,
+                    isGenerated: true,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

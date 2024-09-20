@@ -16,10 +16,9 @@ class HistoryBloc extends Bloc<HistoryEvents, HistoryState> {
   }
 
   void _getHistories(GetHistoryEvent event, Emitter<HistoryState> emit) async {
-    emit(LoadingHistoryState());
     try {
       // get
-      List<ScanQrModel> qrCodes = await _historyRepository.getQrCodes();
+      List<QrModel> qrCodes = await _historyRepository.getQrCodes();
       emit(LoadedHistoryState(qrCodesList: qrCodes));
     } catch (e) {
       print("Error on receiving histories $e");
@@ -28,10 +27,12 @@ class HistoryBloc extends Bloc<HistoryEvents, HistoryState> {
   }
 
   void _addHistories(AddHistoryEvent event, Emitter<HistoryState> emit) async {
-    emit(LoadingHistoryState());
     try {
-      // add
-      await _historyRepository.addQrCode(event.code);
+      await _historyRepository.addQrCode({
+        'code': event.code,
+        'scannetAt': DateTime.now().toIso8601String(),
+        'isGenerated': event.isGenerated ? 1 : 0,
+      });
     } catch (e) {
       print("Error on adding histories $e");
       emit(ErrorHistoryState(message: e.toString()));
@@ -40,11 +41,10 @@ class HistoryBloc extends Bloc<HistoryEvents, HistoryState> {
 
   void _deleteHistories(
       DeleteHistoryEvent event, Emitter<HistoryState> emit) async {
-    emit(LoadingHistoryState());
     try {
       // delete
       await _historyRepository.deleteQrCode(event.id);
-      List<ScanQrModel> qrCodes = await _historyRepository.getQrCodes();
+      List<QrModel> qrCodes = await _historyRepository.getQrCodes();
       emit(LoadedHistoryState(qrCodesList: qrCodes));
     } catch (e) {
       print("Error on deleting histories $e");

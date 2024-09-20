@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/blocs/history/history_bloc.dart';
+import 'package:qr_code_scanner_app/blocs/history/history_event.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/generate/widgets/custom_textfield.dart';
 import 'package:qr_code_scanner_app/ui/screens/pages/generate/widgets/generate_button.dart';
+import 'package:qr_code_scanner_app/ui/screens/pages/scanner/result_page/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 class EventContainer extends StatefulWidget {
@@ -27,22 +33,6 @@ class _EventContainerState extends State<EventContainer> {
     locationController.dispose();
     descriptionController.dispose();
     super.dispose();
-  }
-
-  void _generateEventQRCode() {
-    // Har bir TextField dan textni olish
-    String eventName = eventNameController.text;
-    String startDate = startDateController.text;
-    String endDate = endDateController.text;
-    String location = locationController.text;
-    String description = descriptionController.text;
-
-    // Olingan textlarni ishlatishingiz mumkin
-    print('Event Name: $eventName');
-    print('Start Date: $startDate');
-    print('End Date: $endDate');
-    print('Location: $location');
-    print('Description: $description');
   }
 
   @override
@@ -88,7 +78,31 @@ class _EventContainerState extends State<EventContainer> {
             hintText: 'Enter description',
             maxLines: 4,
           ),
-          GenerateButton(onPressed: () {}),
+          GenerateButton(onPressed: () {
+            Map<String, dynamic> data = {
+              "Event Name": eventNameController.text,
+              "Start Date": startDateController.text,
+              "End Date": endDateController.text,
+              "Location": locationController.text,
+              "Description": descriptionController.text,
+            };
+
+            BlocProvider.of<HistoryBloc>(context).add(
+              AddHistoryEvent(
+                code: jsonEncode(data),
+                isGenerated: true,
+              ),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResultPage(
+                  qrCode: jsonEncode(data),
+                  isGenerated: true,
+                ),
+              ),
+            );
+          }),
         ],
       ),
     );

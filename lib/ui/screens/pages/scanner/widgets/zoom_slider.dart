@@ -19,7 +19,7 @@ class _MyZoomSliderState extends State<MyZoomSlider> {
       child: BlocBuilder<ZoomCameraCubit, double>(
         builder: (context, zoom) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
               children: [
                 IconButton(
@@ -39,7 +39,7 @@ class _MyZoomSliderState extends State<MyZoomSlider> {
                     max: 100,
                     label:
                         '${(zoom == 0 ? zoom + 1 : zoom).toStringAsFixed(0)}%',
-                    thumbColor: Colors.white,
+                    thumbColor: Colors.amber,
                     activeColor: Colors.amber,
                     onChanged: (value) {
                       context.read<ZoomCameraCubit>().setZoom(value);

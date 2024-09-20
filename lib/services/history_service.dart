@@ -32,17 +32,15 @@ class HistoryService {
         CREATE TABLE history (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           code TEXT,
-          scannetAt TEXT
+          scannetAt TEXT,
+          isGenerated INTEGER
         )
       ''');
   }
 
-  Future<int> insertQrCode(String code) async {
+  Future<int> insertQrCode(Map<String, dynamic> code) async {
     Database db = await database;
-    return await db.insert('history', {
-      "code": code,
-      "scannetAt": DateTime.now().toString(),
-    });
+    return await db.insert('history', code);
   }
 
   Future<List<Map<String, dynamic>>> getQrCodes() async {

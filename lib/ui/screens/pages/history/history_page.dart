@@ -27,15 +27,6 @@ class _QrHistoryPageState extends State<QrHistoryPage> {
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Text("History"),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.menu),
-            ),
-          ),
-        ],
         bottom: AppBar(
           toolbarHeight: 70,
           centerTitle: true,
@@ -44,7 +35,7 @@ class _QrHistoryPageState extends State<QrHistoryPage> {
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: const Color(0xff333333),
+              color: const Color(0xff333333).withOpacity(0.84),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -62,8 +53,17 @@ class _QrHistoryPageState extends State<QrHistoryPage> {
                     duration: const Duration(milliseconds: 300),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color:
-                          _currentIndex == 0 ? const Color(0xffFDB623) : null,
+                      gradient: _currentIndex == 0
+                          ? const LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              tileMode: TileMode.decal,
+                              colors: [
+                                  Color(0xffFDB623),
+                                  Color.fromARGB(255, 175, 133, 48),
+                                  Color.fromARGB(255, 62, 53, 16),
+                                ])
+                          : null,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: const Text("Scan"),
@@ -81,8 +81,17 @@ class _QrHistoryPageState extends State<QrHistoryPage> {
                     duration: const Duration(milliseconds: 300),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color:
-                          _currentIndex == 1 ? const Color(0xffFDB623) : null,
+                      gradient: _currentIndex == 1
+                          ? const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              tileMode: TileMode.decal,
+                              colors: [
+                                  Color(0xffFDB623),
+                                  Color.fromARGB(255, 175, 133, 48),
+                                  Color.fromARGB(255, 62, 53, 16),
+                                ])
+                          : null,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: const Text("Create"),
@@ -94,7 +103,6 @@ class _QrHistoryPageState extends State<QrHistoryPage> {
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(
           left: 20,
           right: 20,
@@ -102,7 +110,7 @@ class _QrHistoryPageState extends State<QrHistoryPage> {
           top: 15,
         ),
         decoration: BoxDecoration(
-          color: const Color(0xff333333),
+          color: const Color(0xff333333).withOpacity(0.84),
           borderRadius: BorderRadius.circular(10),
         ),
         child: qrLists[_currentIndex],

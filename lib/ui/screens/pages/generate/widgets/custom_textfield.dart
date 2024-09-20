@@ -30,6 +30,7 @@ class CustomTextField extends StatelessWidget {
         TextField(
           cursorColor: Colors.white,
           controller: controller,
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 10),
             fillColor: const Color(0xff333333).withOpacity(0.8),

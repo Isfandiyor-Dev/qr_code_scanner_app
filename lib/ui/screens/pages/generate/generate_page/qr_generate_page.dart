@@ -15,8 +15,34 @@ class QrGeneratePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leadingWidth: 80,
         title: Text(genBox.name),
-        
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Center(
+            child: Container(
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                color: const Color(0xff333333),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xff000000).withOpacity(0.1),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Color(0xffFDB623),
+              ),
+            ),
+          ),
+        ),
       ),
       body:
           (generateContainer is SingleFieldContainer) || genBox.name == "Wi-Fi"

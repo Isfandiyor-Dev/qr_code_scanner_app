@@ -4,10 +4,8 @@ sealed class HistoryState {}
 
 final class InitialHistoryState extends HistoryState {}
 
-final class LoadingHistoryState extends HistoryState {}
-
 final class LoadedHistoryState extends HistoryState {
-  final List<ScanQrModel> qrCodesList;
+  final List<QrModel> qrCodesList;
 
   LoadedHistoryState({required this.qrCodesList});
 }

@@ -4,9 +4,11 @@ final class GetHistoryEvent extends HistoryEvents {}
 
 final class AddHistoryEvent extends HistoryEvents {
   final String code;
+  final bool isGenerated;
 
   AddHistoryEvent({
     required this.code,
+    required this.isGenerated,
   });
 }
 

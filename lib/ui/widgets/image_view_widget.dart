@@ -7,22 +7,29 @@ class QrImageViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QrImageView(
-      data: message,
-      version: QrVersions.auto,
-      eyeStyle: const QrEyeStyle(
-        eyeShape: QrEyeShape.square,
-        color: Color(0xff128760),
-      ),
-      dataModuleStyle: const QrDataModuleStyle(
-        dataModuleShape: QrDataModuleShape.square,
-        color: Color(0xff1a5441),
-      ),
-      embeddedImage:
-          const AssetImage('assets/images/4.0x/logo_yakka_transparent.png'),
-      embeddedImageStyle: const QrEmbeddedImageStyle(
-        size: Size.square(40),
+    return Container(
+      decoration: BoxDecoration(
         color: Colors.white,
+        border: Border.all(color: Colors.amber, width: 4),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: QrImageView(
+        data: message,
+        version: QrVersions.auto,
+        eyeStyle: const QrEyeStyle(
+          eyeShape: QrEyeShape.square,
+          color: Colors.black,
+        ),
+        dataModuleStyle: const QrDataModuleStyle(
+          dataModuleShape: QrDataModuleShape.square,
+          color: Colors.black,
+        ),
+        embeddedImage:
+            const AssetImage('assets/images/4.0x/logo_yakka_transparent.png'),
+        embeddedImageStyle: const QrEmbeddedImageStyle(
+          size: Size.square(40),
+          color: Colors.black,
+        ),
       ),
     );
   }

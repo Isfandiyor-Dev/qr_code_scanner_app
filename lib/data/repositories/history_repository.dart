@@ -8,15 +8,15 @@ class HistoryRepository {
     required HistoryService historyService,
   }) : _historyService = historyService;
 
-  Future<List<ScanQrModel>> getQrCodes() async {
+  Future<List<QrModel>> getQrCodes() async {
     List<Map<String, dynamic>> data = await _historyService.getQrCodes();
     return data.map((element) {
-      return ScanQrModel.fromJson(element);
+      return QrModel.fromJson(element);
     }).toList();
   }
 
-  Future<int> addQrCode(String code) async {
-    return await _historyService.insertQrCode(code);
+  Future<int> addQrCode(Map<String, dynamic> data) async {
+    return await _historyService.insertQrCode(data);
   }
 
   Future<int> deleteQrCode(int id) async {

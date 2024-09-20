@@ -20,9 +20,9 @@ class ScreensManager extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       bottomNavigationBar: const BottomAppBar(
-        height: 100,
+        height: 70,
         color: Color(0xff333333),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -47,16 +47,16 @@ class ScreensManager extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
-        width: 80,
-        height: 80,
+        width: 65,
+        height: 65,
         margin: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
               color: Colors.amber,
-              spreadRadius: 5,
-              blurRadius: 15,
+              spreadRadius: 2,
+              blurRadius: 10,
               blurStyle: BlurStyle.normal,
             ),
           ],
@@ -67,9 +67,9 @@ class ScreensManager extends StatelessWidget {
           },
           backgroundColor: Colors.amber,
           shape: const CircleBorder(),
-          child: const Icon(
-            Icons.qr_code_scanner_rounded,
-            size: 35,
+          child: Image.asset(
+            "assets/icons/scan.png",
+            width: 30,
           ),
         ),
       ),
@@ -102,22 +102,25 @@ class _MyBottomBarItemState extends State<MyBottomBarItem> {
         BlocProvider.of<NavigationBarCubit>(context).toggleBarBtn(widget.index);
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: Ink(
-          width: 60,
-          height: 60,
+          width: 50,
+          height: 50,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 widget.icon,
                 color: Colors.white,
-                size: 30,
+                size: 24,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 5),
               Text(
                 widget.label,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                ),
               ),
             ],
           ),

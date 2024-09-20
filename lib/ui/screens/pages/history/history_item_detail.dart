@@ -10,13 +10,11 @@ import 'package:qr_code_scanner_app/ui/widgets/image_view_widget.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ResultPage extends StatelessWidget {
+class HistoryItemDetail extends StatelessWidget {
   final String qrCode;
-  final bool isGenerated;
-  const ResultPage({
+  const HistoryItemDetail({
     super.key,
     required this.qrCode,
-    this.isGenerated = false,
   });
 
   String? getTextButton() {
@@ -24,10 +22,8 @@ class ResultPage extends StatelessWidget {
       return "Go to WiFi settings";
     } else if (qrCode.startsWith(RegExp(r'^https?://'))) {
       return "Go to site";
-    } else if (isGenerated) {
-      return "Regeneration";
     } else {
-      return "Scan again";
+      return null;
     }
   }
 
@@ -120,19 +116,11 @@ class ResultPage extends StatelessWidget {
           left: 20,
           right: 20,
           bottom: 100,
+          top: 20,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Result",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                height: 2,
-                color: Colors.white70,
-              ),
-            ),
             Center(
               child: SizedBox(
                 width: 200,
@@ -149,6 +137,7 @@ class ResultPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17,
                     height: 5,
+                    fontWeight: FontWeight.bold,
                     color: Colors.white70,
                   ),
                 ),
@@ -216,7 +205,7 @@ class ResultPage extends StatelessWidget {
                         : qrCode,
                 style: const TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   color: Colors.white54,
                 ),
               ),
