@@ -56,6 +56,7 @@ class MainApp extends StatelessWidget {
           backgroundColor: Colors.transparent,
           foregroundColor: Color(0xffD9D9D9),
         ),
+        fontFamily: 'Itim',
       ),
       home: ScreensManager(),
     );
