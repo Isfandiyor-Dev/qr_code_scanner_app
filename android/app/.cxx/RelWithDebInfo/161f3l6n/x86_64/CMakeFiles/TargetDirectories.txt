@@ -1,0 +1,2 @@
+/home/isfandiyor/Документы/my_projects/qr_code_scanner_app/android/app/.cxx/RelWithDebInfo/161f3l6n/x86_64/CMakeFiles/edit_cache.dir
+/home/isfandiyor/Документы/my_projects/qr_code_scanner_app/android/app/.cxx/RelWithDebInfo/161f3l6n/x86_64/CMakeFiles/rebuild_cache.dir
