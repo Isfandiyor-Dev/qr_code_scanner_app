@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_code_scanner_app/core/enum/result_screen.dart';
+import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
+import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
 import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/camera_cubit/camera_control_cubit.dart';
 import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/camera_cubit/camera_control_state.dart';
@@ -66,23 +68,6 @@ class _QrScannerPageState extends State<QrScannerPage> {
           children: [
             BlocBuilder<OverlayCubit, double>(builder: (context, state) {
               return MobileScanner(
-                overlayBuilder: (context, constraints) {
-                  return GestureDetector(
-                    onPanUpdate: (details) {
-                      context.read<OverlayCubit>().onPanUpdate(
-                            details: details,
-                            context: context,
-                          );
-                    },
-                    child: QRScannerOverlay(
-                      overlayColor: Colors.black.withOpacity(0.2),
-                      borderRadius: 15,
-                      borderColor: Colors.amber,
-                      scanAreaHeight: state,
-                      scanAreaWidth: state,
-                    ),
-                  );
-                },
                 controller: controller,
                 scanWindow: Rect.fromCenter(
                   center: MediaQuery.of(context).size.center(Offset.zero),
@@ -110,17 +95,37 @@ class _QrScannerPageState extends State<QrScannerPage> {
                 },
               );
             }),
+            BlocBuilder<OverlayCubit, double>(
+              builder: (context, state) {
+                return GestureDetector(
+                  onPanUpdate: (details) {
+                    context.read<OverlayCubit>().onPanUpdate(
+                          details: details,
+                          context: context,
+                        );
+                  },
+                  child: QRScannerOverlay(
+                    overlayColor: Colors.black.withValues(alpha: .2),
+                    borderRadius: 15,
+                    borderColor: context.colorScheme.primary,
+                    scanAreaHeight: state,
+                    scanAreaWidth: state,
+                  ),
+                );
+              },
+            ),
             Align(
               alignment: const Alignment(0, -0.82),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
-                    color: const Color(0xff333333),
+                    color: context.colorScheme.secondary,
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xff333333).withOpacity(0.6),
+                        color: context.colorScheme.secondary
+                            .withValues(alpha: 0.6),
                         blurRadius: 10,
                       )
                     ]),
@@ -142,8 +147,9 @@ class _QrScannerPageState extends State<QrScannerPage> {
                           },
                           icon: Icon(
                             Icons.flash_on_rounded,
-                            color:
-                                state.isTorchOn ? Colors.amber : Colors.white,
+                            color: state.isTorchOn
+                                ? context.colorScheme.primary
+                                : Colors.white,
                           ),
                         );
                       },
@@ -158,11 +164,22 @@ class _QrScannerPageState extends State<QrScannerPage> {
                             CupertinoIcons.camera_rotate_fill,
                             color: state.isMainCamera
                                 ? Colors.white
-                                : Colors.amber,
+                                : context.colorScheme.primary,
                           ),
                         );
                       },
                     ),
+                    // IconButton(
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => SettingsScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    //   icon: SvgPicture.asset("assets/icons/settings.svg"),
+                    // ),
                   ],
                 ),
               ),

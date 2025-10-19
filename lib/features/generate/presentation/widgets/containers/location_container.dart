@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_bloc.dart';
 import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_event.dart';
 import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other/custom_textfield.dart';
@@ -9,7 +9,7 @@ import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other
 import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../../../../core/enum/result_screen.dart';
+import '../../../../../core/enums/result_screen.dart';
 
 class LocationContainer extends StatefulWidget {
   final String iconPath;
@@ -21,23 +21,60 @@ class LocationContainer extends StatefulWidget {
 }
 
 class _LocationContainerState extends State<LocationContainer> {
+  final _formKey = GlobalKey<FormState>();
 
   final TextEditingController locationNameController = TextEditingController();
-  final TextEditingController latitudeController = TextEditingController();
-  final TextEditingController longitudeController = TextEditingController();
-  final TextEditingController postalCodeController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
+  final TextEditingController postalCodeController = TextEditingController();
+  final TextEditingController latitudeController = TextEditingController();
+  final TextEditingController longitudeController = TextEditingController();
 
   @override
   void dispose() {
-    latitudeController.dispose();
-    latitudeController.dispose();
-    longitudeController.dispose();
-    postalCodeController.dispose();
+    locationNameController.dispose();
     stateController.dispose();
     countryController.dispose();
+    postalCodeController.dispose();
+    latitudeController.dispose();
+    longitudeController.dispose();
     super.dispose();
+  }
+
+  void _generateQRCode() {
+    if (!_formKey.currentState!.validate()) {
+      return; // ❌ Agar required maydonlar to‘ldirilmagan bo‘lsa, hech narsa qilinmaydi
+    }
+
+    // ✅ To‘ldirilgan optional maydonlarni shartli qo‘shamiz:
+    Map<String, dynamic> data = {
+      "Location Name": locationNameController.text,
+      "State": stateController.text,
+      "Country": countryController.text,
+      if (postalCodeController.text.isNotEmpty)
+        "Postal Code": postalCodeController.text,
+      if (latitudeController.text.isNotEmpty)
+        "Latitude": latitudeController.text,
+      if (longitudeController.text.isNotEmpty)
+        "Longitude": longitudeController.text,
+    };
+
+    BlocProvider.of<HistoryBloc>(context).add(
+      AddHistoryEvent(
+        code: jsonEncode(data),
+        isGenerated: true,
+      ),
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultPage(
+          qrCode: jsonEncode(data),
+          fromScreen: FromScreenEnum.generated,
+        ),
+      ),
+    );
   }
 
   @override
@@ -46,84 +83,88 @@ class _LocationContainerState extends State<LocationContainer> {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(25),
       decoration: BoxDecoration(
-        color: Colors.grey[800]!.withOpacity(0.7),
+        color: context.colorScheme.secondaryContainer.withValues(alpha: 0.78),
         borderRadius: BorderRadius.circular(10),
-        border: const Border.symmetric(
-          horizontal: BorderSide(color: Colors.amber),
+        border: Border.symmetric(
+          horizontal: BorderSide(color: context.colorScheme.primary),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.asset(widget.iconPath),
-          const SizedBox(height: 20),
-          CustomTextField(
-            fieldLabel: 'Location Name',
-            controller: locationNameController,
-            hintText: "",
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextField(
-                  fieldLabel: 'Latitude',
-                  controller: latitudeController,
-                  hintText: "",
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: CustomTextField(
-                  fieldLabel: 'Longitude',
-                  controller: longitudeController,
-                  hintText: "",
-                ),
-              ),
-            ],
-          ),
-          CustomTextField(
-            fieldLabel: 'Postal Code',
-            controller: postalCodeController,
-            hintText: "",
-          ),
-          CustomTextField(
-            fieldLabel: 'State',
-            controller: stateController,
-            hintText: "",
-          ),
-          CustomTextField(
-            fieldLabel: 'Country',
-            controller: countryController,
-            hintText: "",
-          ),
-          const SizedBox(height: 20),
-          GenerateButton(onPressed: () {
-            Map<String, dynamic> data = {
-              "Location Name": locationNameController.text,
-              "Latitude": latitudeController.text,
-              "Longitude": longitudeController.text,
-              "Postal Code": postalCodeController.text,
-              "State": stateController.text,
-              "Country": countryController.text,
-            };
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(widget.iconPath),
+            const SizedBox(height: 20),
 
-            BlocProvider.of<HistoryBloc>(context).add(
-              AddHistoryEvent(
-                code: jsonEncode(data),
-                isGenerated: true,
-              ),
-            );
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ResultPage(
-                  qrCode: jsonEncode(data),
-                  fromScreen: FromScreenEnum.generated,
+            // ✅ REQUIRED FIELDS
+            CustomTextField(
+              fieldLabel: 'Location Name *',
+              controller: locationNameController,
+              hintText: "Enter location name",
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "Location name is required";
+                }
+                return null;
+              },
+            ),
+            CustomTextField(
+              fieldLabel: 'State *',
+              controller: stateController,
+              hintText: "Enter state/region",
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "State is required";
+                }
+                return null;
+              },
+            ),
+            CustomTextField(
+              fieldLabel: 'Country *',
+              controller: countryController,
+              hintText: "Enter country name",
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "Country is required";
+                }
+                return null;
+              },
+            ),
+
+            // ✅ OPTIONAL FIELDS
+            CustomTextField(
+              fieldLabel: 'Postal Code',
+              controller: postalCodeController,
+              hintText: "Optional",
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextField(
+                    fieldLabel: 'Latitude',
+                    controller: latitudeController,
+                    hintText: "Optional",
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                  ),
                 ),
-              ),
-            );
-          }),
-        ],
+                const SizedBox(width: 16),
+                Expanded(
+                  child: CustomTextField(
+                    fieldLabel: 'Longitude',
+                    controller: longitudeController,
+                    hintText: "Optional",
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            GenerateButton(onPressed: _generateQRCode),
+          ],
+        ),
       ),
     );
   }

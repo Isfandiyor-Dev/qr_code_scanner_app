@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner_app/core/extensions/context/app_media_query_size_extension.dart';
+import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 import 'package:qr_code_scanner_app/features/history/data_source/models/gen_box/gen_box_model.dart';
 import 'package:qr_code_scanner_app/features/generate/data_source/repositories/gen_qr_repository.dart';
 import 'package:qr_code_scanner_app/features/generate/presentation/screens/qr_generate_page.dart';
@@ -17,21 +19,20 @@ class GeneratePage extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Text(
             "Generate QR",
-            style: TextStyle(
-              color: Colors.grey[200],
-            ),
+            style: context.textTheme.headlineLarge,
           ),
         ),
         backgroundColor: Colors.transparent,
       ),
       body: GridView.builder(
         padding:
-            const EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 20),
+            const EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 40),
         itemCount: genQrTypes.genBoxes.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: context.width * 0.24,
           mainAxisSpacing: 40,
           crossAxisSpacing: 25,
+          childAspectRatio: 1,
         ),
         itemBuilder: (context, index) {
           GenBox genBox = genQrTypes.genBoxes[index];
@@ -49,51 +50,59 @@ class GeneratePage extends StatelessWidget {
             },
             borderRadius: BorderRadius.circular(15),
             child: Ink(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: const Color(0xff333333),
-                border: Border.all(
-                  color: Color(0xFFFDB623),
-                  width: 1,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: LinearGradient(
+                    begin: AlignmentGeometry.bottomLeft,
+                    end: AlignmentGeometry.topRight,
+                    colors: [
+                      context.colorScheme.tertiaryFixed,
+                      context.colorScheme.tertiaryFixedDim
+                    ],
+                  ),
+                  border: Border.all(
+                    color: context.colorScheme.primary,
+                    width: 2,
+                  ),
                 ),
-              ),
-              child: Stack(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Align(
-                      alignment: Alignment.center,
-                      child: SvgPicture.asset(genBox.iconPath)),
-                  // const SizedBox(height: 5),
-                  // Text(
-                  //   genBox.name,
-                  //   style: const TextStyle(
-                  //     color: Color(0xffFDB623),
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  Align(
-                    alignment: Alignment(0, -1.5),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFDB623),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        child: Text(
-                          genBox.name,
-                          style: const TextStyle(
-                            color: Color(0xFF2D3047),
-                            fontSize: 12,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isTablet = constraints.maxWidth > 600;
+                    final topOffset = isTablet ? -15.0 : -10.0;
+                    return Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: SvgPicture.asset(genBox.iconPath),
+                        ),
+                        Positioned(
+                          top: topOffset,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: context.colorScheme.primary,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                child: Text(
+                                  genBox.name,
+                                  style: context.textTheme.labelSmall?.copyWith(
+                                    color: context.colorScheme.tertiary,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+                      ],
+                    );
+                  },
+                )),
           );
         },
       ),

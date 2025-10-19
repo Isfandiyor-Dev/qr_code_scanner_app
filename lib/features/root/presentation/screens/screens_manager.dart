@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 import 'package:qr_code_scanner_app/features/root/presentation/bloc/navigation_bar/navigation_bar_cubit.dart';
 import 'package:qr_code_scanner_app/features/generate/presentation/screens/generate_page.dart';
 import 'package:qr_code_scanner_app/features/history/presentation/screens/history_page.dart';
@@ -23,31 +24,14 @@ class _ScreensManagerState extends State<ScreensManager> {
       GeneratePage(),
       const QrHistoryPage(),
     ];
-    // checkForSharedImage();
   }
-
-  // Future<void> checkForSharedImage() async {
-  //   const platform = MethodChannel('imageShareChannel');
-  //   try {
-  //     await platform.invokeMethod('checkImage').then(
-  //       (value) {
-  //         log("Bu value: $value");
-  //       },
-  //     );
-  //   } catch (e) {
-  //     showErrorSnackBar("Error retrieving image: $e", context);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationBarCubit, int>(builder: (ctx, state) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
         bottomNavigationBar: BottomAppBar(
-          height: 70,
-          color: const Color(0xff333333),
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,11 +58,11 @@ class _ScreensManagerState extends State<ScreensManager> {
           width: 65,
           height: 65,
           margin: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.amber,
+                color: context.colorScheme.primary,
                 spreadRadius: 2,
                 blurRadius: 10,
                 blurStyle: BlurStyle.normal,
@@ -89,7 +73,7 @@ class _ScreensManagerState extends State<ScreensManager> {
             onPressed: () {
               BlocProvider.of<NavigationBarCubit>(context).toggleBarBtn(0);
             },
-            backgroundColor: Colors.amber,
+            backgroundColor: context.colorScheme.primary,
             shape: const CircleBorder(),
             child: Image.asset(
               "assets/icons/scan.png",
@@ -123,37 +107,39 @@ class MyBottomBarItem extends StatefulWidget {
 class _MyBottomBarItemState extends State<MyBottomBarItem> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(50),
-      onTap: () {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+      ),
+      onPressed: () {
         BlocProvider.of<NavigationBarCubit>(context).toggleBarBtn(widget.index);
       },
       child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Ink(
-          width: 50,
-          height: 50,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                widget.icon,
-                color: widget.isSelected ? Colors.amber.shade400 : Colors.white,
-                size: widget.isSelected ? 25 : 24,
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              widget.icon,
+              color: widget.isSelected
+                  ? context.colorScheme.primary
+                  : context.colorScheme.onPrimaryContainer,
+              size: widget.isSelected ? 26 : 25,
+            ),
+            const SizedBox(height: 5),
+            Text(
+              widget.label,
+              style: TextStyle(
+                color: widget.isSelected
+                    ? context.colorScheme.primary
+                    : context.colorScheme.onPrimaryContainer,
+                fontSize: widget.isSelected ? 12 : 11,
+                fontWeight:
+                    widget.isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
-              const SizedBox(height: 5),
-              Text(
-                widget.label,
-                style: TextStyle(
-                  color:
-                      widget.isSelected ? Colors.amber.shade400 : Colors.white,
-                  fontSize: widget.isSelected ? 11 : 10,
-                  fontWeight:
-                      widget.isSelected ? FontWeight.w600 : FontWeight.normal,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

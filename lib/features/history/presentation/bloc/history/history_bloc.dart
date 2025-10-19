@@ -29,6 +29,9 @@ class HistoryBloc extends Bloc<HistoryEvents, HistoryState> {
   void _getHistories(GetHistoryEvent event, Emitter<HistoryState> emit) async {
     try {
       List<QrCodeModel> qrCodes = await _getQrCodesUseCase.call();
+
+      qrCodes.sort((a, b) => b.scannedAt.compareTo(a.scannedAt));
+
       emit(LoadedHistoryState(qrCodesList: qrCodes));
     } catch (e) {
       emit(ErrorHistoryState(message: e.toString()));

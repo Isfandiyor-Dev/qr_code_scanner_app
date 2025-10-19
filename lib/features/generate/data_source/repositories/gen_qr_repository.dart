@@ -8,6 +8,7 @@ import 'package:qr_code_scanner_app/features/generate/presentation/widgets/conta
 
 class GenQrTypes {
   final List<GenBox> genBoxes = [
+    // 1. Eng ko‘p ishlatiladiganlar
     SingleFieldBox(
       name: "Text",
       iconPath: "assets/gen_icons/text.svg",
@@ -38,24 +39,10 @@ class GenQrTypes {
       ),
     ),
     GenBox(
-      name: "Event",
-      iconPath: "assets/gen_icons/event.svg",
-      generateContainer: const EventContainer(
-        iconPath: "assets/gen_icons/event.svg",
-      ),
-    ),
-    GenBox(
       name: "Contact",
       iconPath: "assets/gen_icons/contact.svg",
       generateContainer: const ContactContainer(
         iconPath: "assets/gen_icons/contact.svg",
-      ),
-    ),
-    GenBox(
-      name: "Business",
-      iconPath: "assets/gen_icons/business.svg",
-      generateContainer: const BusinessContainer(
-        iconPath: "assets/gen_icons/business.svg",
       ),
     ),
     GenBox(
@@ -65,6 +52,8 @@ class GenQrTypes {
         iconPath: "assets/gen_icons/location.svg",
       ),
     ),
+
+    // 2. O‘rta darajadagilar
     SingleFieldBox(
       name: "WhatsApp",
       iconPath: "assets/gen_icons/whatsapp.svg",
@@ -88,6 +77,33 @@ class GenQrTypes {
       ),
     ),
     SingleFieldBox(
+      name: "Telephone",
+      iconPath: "assets/gen_icons/telephone.svg",
+      fieldLabel: "Phone Number",
+      hintText: "Enter phone number",
+      generateContainer: const SingleFieldContainer(
+        name: "Telephone",
+        iconPath: "assets/gen_icons/telephone.svg",
+        fieldLabel: "Phone Number",
+      ),
+    ),
+
+    // 3. Kamroq ishlatiladiganlar
+    GenBox(
+      name: "Event",
+      iconPath: "assets/gen_icons/event.svg",
+      generateContainer: const EventContainer(
+        iconPath: "assets/gen_icons/event.svg",
+      ),
+    ),
+    GenBox(
+      name: "Business",
+      iconPath: "assets/gen_icons/business.svg",
+      generateContainer: const BusinessContainer(
+        iconPath: "assets/gen_icons/business.svg",
+      ),
+    ),
+    SingleFieldBox(
       name: "Twitter",
       iconPath: "assets/gen_icons/twitter.svg",
       fieldLabel: "Username",
@@ -107,17 +123,6 @@ class GenQrTypes {
         name: "Instagram",
         iconPath: "assets/gen_icons/instagram.svg",
         fieldLabel: "Username",
-      ),
-    ),
-    SingleFieldBox(
-      name: "Telephone",
-      iconPath: "assets/gen_icons/telephone.svg",
-      fieldLabel: "Phone Number",
-      hintText: "Enter phone number",
-      generateContainer: const SingleFieldContainer(
-        name: "Telephone",
-        iconPath: "assets/gen_icons/telephone.svg",
-        fieldLabel: "Phone Number",
       ),
     ),
   ];

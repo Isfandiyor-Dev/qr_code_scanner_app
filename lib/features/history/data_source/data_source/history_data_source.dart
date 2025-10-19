@@ -39,9 +39,27 @@ class HistoryDataSource {
       ''');
   }
 
-  Future<int> insertQrCode(QrCodeRequest code) async {
-    Database db = await database;
-    return await db.insert('history', code.toJson());
+  Future<int> insertQrCode(QrCodeRequest qrCode) async {
+    final Database db = await database;
+    // Avval shu kod bazada bormi, tekshiramiz
+    final existing = await db.query(
+      'history',
+      where: 'code = ?',
+      whereArgs: [qrCode.code],
+    );
+
+    if (existing.isNotEmpty) {
+      // Agar bor bo‘lsa — faqat vaqtini yangilaymiz
+      return await db.update(
+        'history',
+        {'scannedAt': DateTime.now().toIso8601String()},
+        where: 'code = ?',
+        whereArgs: [qrCode.code],
+      );
+    } else {
+      // Agar yo‘q bo‘lsa — yangi yozuv qo‘shamiz
+      return await db.insert('history', qrCode.toJson());
+    }
   }
 
   Future<List<Map<String, dynamic>>> getQrCodes() async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 
 class GenerateButton extends StatelessWidget {
   final void Function() onPressed;
@@ -14,15 +15,14 @@ class GenerateButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        backgroundColor: Colors.amber,
+        backgroundColor: context.colorScheme.primary,
         fixedSize: const Size(200, 50),
       ),
       onPressed: onPressed,
-      child: const Text(
+      child: Text(
         "Generate QR Code",
-        style: TextStyle(
-          color: Colors.black,
-        ),
+        style: context.textTheme.labelLarge
+            ?.copyWith(color: context.colorScheme.secondary),
       ),
     );
   }

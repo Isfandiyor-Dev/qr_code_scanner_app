@@ -4,14 +4,14 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
-// def keystoreProperties = new Properties()
-// def keystorePropertiesFile = rootProject.file('key.properties')
-// if (keystorePropertiesFile.exists()) {
-//     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-// }
+ def keystoreProperties = new Properties()
+   def keystorePropertiesFile = rootProject.file('key.properties')
+   if (keystorePropertiesFile.exists()) {
+       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+   }
 
 android {
-    namespace = "com.example.qr_code_scanner_app"
+    namespace = "com.isfandiyor.qrscanner"
     compileSdk = 36
     ndkVersion = "27.0.12077973"
 
@@ -25,34 +25,32 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.qr_code_scanner_app"
+        applicationId = "com.isfandiyor.qrscanner"
         minSdk = 24
         targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
+
     lint {
         disable.add("PropertyEscape")
     }
 
-    // signingConfigs {
-    //     release {
-    //         keyAlias keystoreProperties['keyAlias']
-    //         keyPassword keystoreProperties['keyPassword']
-    //         storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-    //         storePassword keystoreProperties['storePassword']
-    //     }
-    // }
+    signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+    }
 
+   
     buildTypes {
-        release {
-            // Release uchun signing configni qo'shamiz
-            // signingConfig signingConfigs.release
-            minifyEnabled false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+       release {
+           signingConfig signingConfigs.release
+       }
     }
 }
 

@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+// import 'package:qr_code_scanner_app/core/config/local_config.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/history/data_source/data_source/history_data_source.dart';
 import '../../features/history/data_source/repository/history_repository.dart';
@@ -9,14 +11,13 @@ import '../../features/history/domain/use_cases/delete_qr_code_use_case.dart';
 import '../../features/history/domain/use_cases/get_qr_codes_use_case.dart';
 import '../../features/history/presentation/bloc/history/history_bloc.dart';
 import '../../features/history/presentation/bloc/history_cubit/history_cubit.dart';
-import '../../features/permissions/di_container.dart';
 import '../../features/qr_scanner/presentation/bloc/size_scanner/overlay_cubit.dart';
 import '../../features/qr_scanner/presentation/bloc/zoom_slider/zoom_camera_cubit.dart';
 import '../../features/root/presentation/bloc/navigation_bar/navigation_bar_cubit.dart';
 
 final getIt = GetIt.instance;
 
-void setUp() {
+Future<void> setUpDi() async {
   //CONTROLLERS
   getIt.registerSingleton<MobileScannerController>(MobileScannerController());
 
@@ -45,6 +46,10 @@ void setUp() {
   getIt.registerFactory(() => NavigationBarCubit());
   getIt.registerFactory(() => HistoryCubit());
 
+  // final prefers = await SharedPreferences.getInstance();
+  // getIt.registerLazySingleton(() => prefers);
+  // getIt.registerLazySingleton(() => LocalConfig(preferences: getIt()));
+
   getIt.registerFactory(
     () => HistoryBloc(
       getQrCodesUseCase: getIt(),
@@ -52,6 +57,4 @@ void setUp() {
       deleteQrCodeUseCase: getIt(),
     ),
   );
-
-  setUpPermission();
 }

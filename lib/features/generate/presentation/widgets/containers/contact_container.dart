@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_bloc.dart';
 import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_event.dart';
 import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other/custom_textfield.dart';
@@ -9,7 +8,7 @@ import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other
 import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../../../../core/enum/result_screen.dart';
+import '../../../../../core/enums/result_screen.dart';
 
 class ContactContainer extends StatefulWidget {
   final String iconPath;
@@ -21,12 +20,14 @@ class ContactContainer extends StatefulWidget {
 }
 
 class _ContactContainerState extends State<ContactContainer> {
+  final _formKey = GlobalKey<FormState>();
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController companyController = TextEditingController();
-  final TextEditingController jobController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController companyController = TextEditingController();
+  final TextEditingController jobController = TextEditingController();
   final TextEditingController websiteController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
@@ -36,15 +37,91 @@ class _ContactContainerState extends State<ContactContainer> {
   void dispose() {
     nameController.dispose();
     lastNameController.dispose();
-    companyController.dispose();
-    jobController.dispose();
     phoneController.dispose();
     emailController.dispose();
+    companyController.dispose();
+    jobController.dispose();
     websiteController.dispose();
     addressController.dispose();
     cityController.dispose();
     countryController.dispose();
     super.dispose();
+  }
+
+  bool _isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
+  }
+
+  bool _isValidPhone(String phone) {
+    final phoneRegex = RegExp(r'^\+?[0-9]{7,15}$');
+    return phoneRegex.hasMatch(phone);
+  }
+
+  String _generateVCard() {
+    final List<String> lines = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+    ];
+
+    final firstName = nameController.text.trim();
+    final lastName = lastNameController.text.trim();
+    lines.add('N:$lastName;$firstName;;;');
+    lines.add('FN:$firstName $lastName');
+
+    if (phoneController.text.trim().isNotEmpty) {
+      lines.add('TEL:${phoneController.text.trim()}');
+    }
+    if (emailController.text.trim().isNotEmpty) {
+      lines.add('EMAIL:${emailController.text.trim()}');
+    }
+    if (companyController.text.trim().isNotEmpty) {
+      lines.add('ORG:${companyController.text.trim()}');
+    }
+    if (jobController.text.trim().isNotEmpty) {
+      lines.add('TITLE:${jobController.text.trim()}');
+    }
+    if (websiteController.text.trim().isNotEmpty) {
+      lines.add('URL:${websiteController.text.trim()}');
+    }
+
+    if (addressController.text.trim().isNotEmpty ||
+        cityController.text.trim().isNotEmpty ||
+        countryController.text.trim().isNotEmpty) {
+      final addressParts = [
+        '',
+        '',
+        addressController.text.trim(),
+        cityController.text.trim(),
+        '',
+        '',
+        countryController.text.trim(),
+      ];
+      lines.add('ADR:${addressParts.join(';')}');
+    }
+
+    lines.add('END:VCARD');
+    return lines.join('\n');
+  }
+
+  void _onGenerate() {
+    if (!_formKey.currentState!.validate()) return;
+
+    final vCard = _generateVCard();
+
+    BlocProvider.of<HistoryBloc>(context).add(
+      AddHistoryEvent(code: vCard, isGenerated: true),
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultPage(
+          qrCode: vCard,
+          fromScreen: FromScreenEnum.generated,
+        ),
+      ),
+    );
   }
 
   @override
@@ -53,136 +130,104 @@ class _ContactContainerState extends State<ContactContainer> {
       margin: const EdgeInsets.all(25),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.grey[800]!.withOpacity(0.7),
+        color: context.colorScheme.secondaryContainer.withValues(alpha: 0.78),
         borderRadius: BorderRadius.circular(10),
-        border: const Border.symmetric(
-          horizontal: BorderSide(color: Colors.amber),
+        border: Border.symmetric(
+          horizontal: BorderSide(color: context.colorScheme.primary),
         ),
       ),
       child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SvgPicture.asset(widget.iconPath),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    fieldLabel: 'First Name',
-                    controller: nameController,
-                    hintText: 'Enter name',
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CustomTextField(
-                    fieldLabel: 'Last Name',
-                    controller: lastNameController,
-                    hintText: 'Enter last name',
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    fieldLabel: 'Company',
-                    controller: companyController,
-                    hintText: 'Enter company',
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CustomTextField(
-                    fieldLabel: 'Job',
-                    controller: jobController,
-                    hintText: 'Enter job',
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    fieldLabel: 'Phone',
-                    controller: phoneController,
-                    hintText: 'Enter phone',
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CustomTextField(
-                    fieldLabel: 'Email',
-                    controller: emailController,
-                    hintText: 'Enter email',
-                  ),
-                ),
-              ],
-            ),
-            CustomTextField(
-              fieldLabel: 'Website',
-              controller: websiteController,
-              hintText: 'Enter website',
-            ),
-            CustomTextField(
-              fieldLabel: 'Address',
-              controller: addressController,
-              hintText: 'Enter address',
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    fieldLabel: 'City',
-                    controller: cityController,
-                    hintText: 'Enter city',
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CustomTextField(
-                    fieldLabel: 'Country',
-                    controller: countryController,
-                    hintText: 'Enter country',
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            GenerateButton(onPressed: () {
-              Map<String, dynamic> data = {
-                "Name": nameController.text,
-                "Last Name": lastNameController.text,
-                "Company Name": companyController.text,
-                "Job": jobController.text,
-                "Phone": phoneController.text,
-                "Email": emailController.text,
-                "Website": websiteController.text,
-                "Address": addressController.text,
-                "City": cityController.text,
-                "Country": countryController.text,
-              };
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(child: SvgPicture.asset(widget.iconPath)),
+              const SizedBox(height: 20),
 
-              BlocProvider.of<HistoryBloc>(context).add(
-                AddHistoryEvent(
-                  code: jsonEncode(data),
-                  isGenerated: true,
-                ),
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ResultPage(
-                    qrCode: jsonEncode(data),
-                    fromScreen: FromScreenEnum.generated,
-                  ),
-                ),
-              );
-            }),
-          ],
+              /// REQUIRED FIELDS
+              CustomTextField(
+                fieldLabel: 'First Name *',
+                controller: nameController,
+                hintText: 'Enter first name',
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'First name cannot be empty';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextField(
+                fieldLabel: 'Last Name',
+                controller: lastNameController,
+                hintText: 'Enter last name',
+              ),
+              CustomTextField(
+                fieldLabel: 'Phone *',
+                controller: phoneController,
+                hintText: 'Enter phone number',
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Phone number cannot be empty';
+                  }
+                  if (!_isValidPhone(value.trim())) {
+                    return 'Invalid phone number format';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextField(
+                fieldLabel: 'Email',
+                controller: emailController,
+                hintText: 'Enter email address',
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  final email = value?.trim() ?? '';
+                  if (email.isNotEmpty && !_isValidEmail(email)) {
+                    return 'Invalid email address';
+                  }
+                  return null;
+                },
+              ),
+
+              /// OPTIONAL FIELDS
+              CustomTextField(
+                fieldLabel: 'Company',
+                controller: companyController,
+                hintText: 'Enter company name',
+              ),
+              CustomTextField(
+                fieldLabel: 'Job',
+                controller: jobController,
+                hintText: 'Enter job title',
+              ),
+              CustomTextField(
+                fieldLabel: 'Website',
+                controller: websiteController,
+                hintText: 'Enter website',
+                keyboardType: TextInputType.url,
+              ),
+              CustomTextField(
+                fieldLabel: 'Address',
+                controller: addressController,
+                hintText: 'Enter address',
+              ),
+              CustomTextField(
+                fieldLabel: 'City',
+                controller: cityController,
+                hintText: 'Enter city',
+              ),
+              CustomTextField(
+                fieldLabel: 'Country',
+                controller: countryController,
+                hintText: 'Enter country',
+              ),
+              const SizedBox(height: 20),
+
+              Center(child: GenerateButton(onPressed: _onGenerate)),
+            ],
+          ),
         ),
       ),
     );

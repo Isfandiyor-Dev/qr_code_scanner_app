@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/bloc/bloc_scope.dart';
-import 'package:qr_code_scanner_app/core/theme/app_theme/theme_dark.dart';
+import 'package:qr_code_scanner_app/core/bloc/bloc_scope/bloc_scope.dart';
 import 'package:qr_code_scanner_app/core/di/di.dart';
+import 'package:qr_code_scanner_app/core/themes/app_themes/theme_dark.dart';
 import 'package:qr_code_scanner_app/features/splash/splash_screen.dart';
 
-void main() {
-  setUp();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setUpDi();
   runApp(const BlocScope(child: MainApp()));
 }
 

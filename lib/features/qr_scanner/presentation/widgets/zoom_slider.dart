@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/zoom_slider/zoom_camera_cubit.dart';
 
 class MyZoomSlider extends StatefulWidget {
@@ -39,8 +40,8 @@ class _MyZoomSliderState extends State<MyZoomSlider> {
                     max: 100,
                     label:
                         '${(zoom == 0 ? zoom + 1 : zoom).toStringAsFixed(0)}%',
-                    thumbColor: Colors.amber,
-                    activeColor: Colors.amber,
+                    thumbColor: context.colorScheme.primary,
+                    activeColor: context.colorScheme.primary,
                     onChanged: (value) {
                       context.read<ZoomCameraCubit>().setZoom(value);
                     },
