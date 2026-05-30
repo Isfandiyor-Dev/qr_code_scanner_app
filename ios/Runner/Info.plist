@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>Qr Code Scanner App</string>
+    <string>QR Maker &amp; Scanner</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>qr_code_scanner_app</string>
+    <string>QR Maker &amp; Scanner</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -46,19 +46,20 @@
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
     
-    <!-- Galereyaga kirish uchun ruxsat -->
+    <!-- Permission to access photo library -->
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Rasmlarni galereyaga saqlash uchun ruxsat kerak.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Rasmlarni ko'rish uchun ruxsat kerak.</string>
+    <string>We need permission to save photos to your library for your convenience.</string>
     
-    <!-- Fayllarga kirish uchun ruxsat -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need permission to access your photo library to view and select your photos.</string>
+    
+    <!-- Permission to access files -->
     <key>UIFileSharingEnabled</key>
     <true/>
     <key>LSSupportsOpeningDocumentsInPlace</key>
     <true/>
     
-    <!-- Tashqi ilovalar bilan ishlash (intent-filter ga mos) -->
+    <!-- Handle files from external apps (equivalent to Android intent-filter) -->
     <key>CFBundleDocumentTypes</key>
     <array>
         <dict>
@@ -75,7 +76,7 @@
         </dict>
     </array>
     
-    <!-- Tashqi dasturga murojaat qilish uchun -->
+    <!-- URL schemes for querying external apps -->
     <key>LSApplicationQueriesSchemes</key>
     <array>
         <string>process-text</string>

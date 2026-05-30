@@ -6,11 +6,8 @@
     <application
         android:label="QR Maker &amp; Scanner"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
-
-        <meta-data
-        android:name="io.flutter.embedding.android.EnableImpeller"
-        android:value="false" />
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true">
 
         <provider
             android:name="androidx.core.content.FileProvider"

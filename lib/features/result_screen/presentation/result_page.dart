@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
 import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
@@ -616,8 +617,23 @@ Password: $displayPassword$hiddenText
   }
 
   Future<void> saveQrToGallery(String qrData, BuildContext ctx) async {
+    // Request the appropriate permission on every press.
+    // On Android 13+, Permission.storage is auto-granted; on older versions it
+    // triggers the OS dialog. On iOS, Permission.photos covers the photo library.
+    final permission = Platform.isIOS ? Permission.photos : Permission.storage;
+    final status = await permission.request();
+
+    if (!status.isGranted) {
+      showMessageSnackBar("Permission denied", ctx);
+      return;
+    }
+
     try {
-      showLoadingDialog(ctx); // 🔹 Loading chiqaramiz
+      showLoadingDialog(ctx);
+
+      const double borderWidth = 100.0;
+      const double qrSize = 720.0;
+      const double totalSize = qrSize + borderWidth * 2;
 
       final qrCode = QrCode.fromData(
         data: qrData,
@@ -625,18 +641,16 @@ Password: $displayPassword$hiddenText
       );
       final qrImage = QrImage(qrCode);
 
-      const double borderWidth = 100.0;
-      const double qrSize = 720.0;
-      const double totalSize = qrSize + borderWidth * 2;
-
       final recorder = ui.PictureRecorder();
       final canvas = Canvas(
         recorder,
         const Rect.fromLTWH(0, 0, totalSize, totalSize),
       );
 
-      final paint = Paint()..color = Colors.white;
-      canvas.drawRect(const Rect.fromLTWH(0, 0, totalSize, totalSize), paint);
+      canvas.drawRect(
+        const Rect.fromLTWH(0, 0, totalSize, totalSize),
+        Paint()..color = Colors.white,
+      );
 
       final qrImageBytes = await qrImage.toImageAsBytes(
         size: qrSize.toInt(),
@@ -646,30 +660,31 @@ Password: $displayPassword$hiddenText
         ),
       );
 
-      final qrImageBuffer = qrImageBytes!.buffer.asUint8List();
-      final codec = await ui.instantiateImageCodec(qrImageBuffer);
-      final frame = await codec.getNextFrame();
-      final ui.Image qrUiImage = frame.image;
+      final codec = await ui.instantiateImageCodec(
+        qrImageBytes!.buffer.asUint8List(),
+      );
+      final qrUiImage = (await codec.getNextFrame()).image;
 
-      final paintQr = Paint();
-      const offset = Offset(borderWidth, borderWidth);
-      canvas.drawImage(qrUiImage, offset, paintQr);
+      canvas.drawImage(qrUiImage, const Offset(borderWidth, borderWidth), Paint());
 
-      final picture = recorder.endRecording();
-      final img = await picture.toImage(totalSize.toInt(), totalSize.toInt());
-      final byteData = await img.toByteData(format: ui.ImageByteFormat.png);
-      final buffer = byteData!.buffer.asUint8List();
+      final img = await recorder
+          .endRecording()
+          .toImage(totalSize.toInt(), totalSize.toInt());
+      final pngBytes =
+          (await img.toByteData(format: ui.ImageByteFormat.png))!
+              .buffer
+              .asUint8List();
 
-      await ImageGallerySaver.saveImage(
-        buffer,
+      await ImageGallerySaverPlus.saveImage(
+        pngBytes,
         name: "qr_code_${const Uuid().v4().substring(0, 8)}",
         quality: 100,
       );
 
-      Navigator.pop(ctx); // 🔹 Loading dialogni yopamiz
+      Navigator.pop(ctx);
       showMessageSnackBar("QR code saved to gallery!", ctx);
     } catch (e) {
-      Navigator.pop(ctx); // 🔹 Hatolikda ham loadingni yopamiz
+      Navigator.pop(ctx);
       showErrorSnackBar("An error occurred while saving.", ctx);
     }
   }
