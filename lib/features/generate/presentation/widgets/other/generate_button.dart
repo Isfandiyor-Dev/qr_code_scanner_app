@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 
+/// Primary button used to submit QR generation forms.
 class GenerateButton extends StatelessWidget {
+  /// Callback invoked when the button is pressed.
   final void Function() onPressed;
+
+  /// Creates a form submission button.
   const GenerateButton({
     super.key,
     required this.onPressed,

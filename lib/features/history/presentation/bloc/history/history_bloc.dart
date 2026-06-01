@@ -8,11 +8,13 @@ import 'package:qr_code_scanner_app/features/history/data_source/models/scan_qr/
 
 import '../../../data_source/models/scan_qr/scan_qr_request.dart';
 
+/// Bloc that loads, inserts, and deletes QR history entries.
 class HistoryBloc extends Bloc<HistoryEvents, HistoryState> {
   final GetQrCodesUseCase _getQrCodesUseCase;
   final AddQrCodeUseCase _addQrCodeUseCase;
   final DeleteQrCodeUseCase _deleteQrCodeUseCase;
 
+  /// Creates a history bloc with the required use cases.
   HistoryBloc({
     required GetQrCodesUseCase getQrCodesUseCase,
     required AddQrCodeUseCase addQrCodeUseCase,

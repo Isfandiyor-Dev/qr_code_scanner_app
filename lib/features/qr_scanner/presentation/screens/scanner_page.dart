@@ -16,9 +16,14 @@ import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/size_s
 import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
 import 'package:qr_code_scanner_app/features/qr_scanner/presentation/widgets/zoom_slider.dart';
 import 'package:qr_code_scanner_app/core/di/di.dart';
+import 'package:qr_code_scanner_app/core/services/scan_feedback_service.dart';
+import 'package:qr_code_scanner_app/features/settings/presentation/screens/settings.dart';
+import 'package:qr_code_scanner_app/gen/assets.gen.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
 
+/// Camera-based QR scanner screen with gallery import and zoom controls.
 class QrScannerPage extends StatefulWidget {
+  /// Creates the scanner page.
   const QrScannerPage({super.key});
 
   @override
@@ -29,6 +34,14 @@ class _QrScannerPageState extends State<QrScannerPage> {
   final ImagePicker _picker = ImagePicker();
   final controller = getIt.get<MobileScannerController>();
 
+  late final CameraControlCubit _cameraCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cameraCubit = CameraControlCubit(controller);
+  }
+
   Future<void> _scanImage() async {
     try {
       XFile? pikedImage = await _picker.pickImage(source: ImageSource.gallery);
@@ -36,6 +49,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
         final result = await controller.analyzeImage(pikedImage.path);
         if (result != null && result.barcodes.length == 1) {
           controller.stop();
+          getIt<ScanFeedbackService>().onScanSuccess();
           String code = result.barcodes.first.rawValue!;
           BlocProvider.of<HistoryBloc>(context).add(
             AddHistoryEvent(code: code, isGenerated: false),
@@ -61,8 +75,8 @@ class _QrScannerPageState extends State<QrScannerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CameraControlCubit(controller),
+    return BlocProvider.value(
+      value: _cameraCubit,
       child: Scaffold(
         body: Stack(
           children: [
@@ -77,6 +91,11 @@ class _QrScannerPageState extends State<QrScannerPage> {
                 onDetect: (barcode) async {
                   if (barcode.barcodes.length == 1) {
                     controller.stop();
+
+                    _cameraCubit.resetTorchState();
+
+                    getIt<ScanFeedbackService>().onScanSuccess();
+
                     String code = barcode.barcodes.first.rawValue!;
                     BlocProvider.of<HistoryBloc>(context).add(
                       AddHistoryEvent(code: code, isGenerated: false),
@@ -143,7 +162,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                       builder: (context, state) {
                         return IconButton(
                           onPressed: () {
-                            context.read<CameraControlCubit>().toggleTorch();
+                            _cameraCubit.toggleTorch();
                           },
                           icon: Icon(
                             Icons.flash_on_rounded,
@@ -158,7 +177,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                       builder: (context, state) {
                         return IconButton(
                           onPressed: () {
-                            context.read<CameraControlCubit>().switchCamera();
+                            _cameraCubit.switchCamera();
                           },
                           icon: Icon(
                             CupertinoIcons.camera_rotate_fill,
@@ -169,17 +188,24 @@ class _QrScannerPageState extends State<QrScannerPage> {
                         );
                       },
                     ),
-                    // IconButton(
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => SettingsScreen(),
-                    //       ),
-                    //     );
-                    //   },
-                    //   icon: SvgPicture.asset("assets/icons/settings.svg"),
-                    // ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsScreen(),
+                          ),
+                        );
+                      },
+                      icon: Assets.icons.settings.svg(
+                        width: 22,
+                        height: 22,
+                        colorFilter: const ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -11,9 +11,12 @@ import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/enums/result_screen.dart';
 
+/// Form used to generate a location QR code.
 class LocationContainer extends StatefulWidget {
+  /// Icon displayed above the location form.
   final String iconPath;
 
+  /// Creates a location QR generation form.
   const LocationContainer({super.key, required this.iconPath});
 
   @override
@@ -43,10 +46,9 @@ class _LocationContainerState extends State<LocationContainer> {
 
   void _generateQRCode() {
     if (!_formKey.currentState!.validate()) {
-      return; // ❌ Agar required maydonlar to‘ldirilmagan bo‘lsa, hech narsa qilinmaydi
+      return;
     }
 
-    // ✅ To‘ldirilgan optional maydonlarni shartli qo‘shamiz:
     Map<String, dynamic> data = {
       "Location Name": locationNameController.text,
       "State": stateController.text,
@@ -96,8 +98,6 @@ class _LocationContainerState extends State<LocationContainer> {
           children: [
             SvgPicture.asset(widget.iconPath),
             const SizedBox(height: 20),
-
-            // ✅ REQUIRED FIELDS
             CustomTextField(
               fieldLabel: 'Location Name *',
               controller: locationNameController,
@@ -131,8 +131,6 @@ class _LocationContainerState extends State<LocationContainer> {
                 return null;
               },
             ),
-
-            // ✅ OPTIONAL FIELDS
             CustomTextField(
               fieldLabel: 'Postal Code',
               controller: postalCodeController,

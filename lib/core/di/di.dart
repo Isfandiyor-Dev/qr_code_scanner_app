@@ -1,8 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-// import 'package:qr_code_scanner_app/core/config/local_config.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../config/local_config.dart';
+import '../services/scan_feedback_service.dart';
+import '../../features/settings/presentation/cubit/settings_cubit.dart';
 import '../../features/history/data_source/data_source/history_data_source.dart';
 import '../../features/history/data_source/repository/history_repository.dart';
 import '../../features/history/domain/repositories/history_repository.dart';
@@ -11,25 +13,44 @@ import '../../features/history/domain/use_cases/delete_qr_code_use_case.dart';
 import '../../features/history/domain/use_cases/get_qr_codes_use_case.dart';
 import '../../features/history/presentation/bloc/history/history_bloc.dart';
 import '../../features/history/presentation/bloc/history_cubit/history_cubit.dart';
+import '../../features/qr_designer/data_source/data_source/logo_file_storage.dart';
+import '../../features/qr_designer/data_source/data_source/qr_design_data_source.dart';
+import '../../features/qr_designer/data_source/repository/qr_design_repository.dart';
+import '../../features/qr_designer/domain/repositories/qr_design_repository.dart';
+import '../../features/qr_designer/domain/use_cases/load_qr_design_use_case.dart';
+import '../../features/qr_designer/domain/use_cases/save_qr_design_use_case.dart';
+import '../../features/qr_designer/presentation/cubit/qr_customization_cubit.dart';
 import '../../features/qr_scanner/presentation/bloc/size_scanner/overlay_cubit.dart';
 import '../../features/qr_scanner/presentation/bloc/zoom_slider/zoom_camera_cubit.dart';
 import '../../features/root/presentation/bloc/navigation_bar/navigation_bar_cubit.dart';
 
 final getIt = GetIt.instance;
 
+/// Registers application services, repositories, use cases, blocs, and cubits.
 Future<void> setUpDi() async {
-  //CONTROLLERS
+  // Controllers.
   getIt.registerSingleton<MobileScannerController>(MobileScannerController());
 
-  //DATA SOURCES
-  getIt.registerLazySingleton(() => HistoryDataSource());
+  // Configuration and services.
+  final sharedPreferences = await SharedPreferences.getInstance();
+  getIt.registerSingleton<SharedPreferences>(sharedPreferences);
+  getIt.registerLazySingleton(() => LocalConfig(preferences: getIt()));
+  getIt.registerLazySingleton(() => ScanFeedbackService(config: getIt()));
 
-  //REPOSITORIES
+  // Data sources.
+  getIt.registerLazySingleton(() => HistoryDataSource());
+  getIt.registerLazySingleton(() => QrDesignDataSource());
+  getIt.registerLazySingleton(() => LogoFileStorage());
+
+  // Repositories.
   getIt.registerLazySingleton<IHistoryRepository>(
     () => HistoryRepositoryImpl(historyDataSource: getIt()),
   );
+  getIt.registerLazySingleton<IQrDesignRepository>(
+    () => QrDesignRepositoryImpl(dataSource: getIt(), logoStorage: getIt()),
+  );
 
-  //USE CASES
+  // Use cases.
   getIt.registerLazySingleton(
     () => GetQrCodesUseCase(historyRepository: getIt()),
   );
@@ -39,16 +60,22 @@ Future<void> setUpDi() async {
   getIt.registerLazySingleton(
     () => DeleteQrCodeUseCase(historyRepository: getIt()),
   );
+  getIt.registerLazySingleton(() => LoadQrDesignUseCase(repository: getIt()));
+  getIt.registerLazySingleton(() => SaveQrDesignUseCase(repository: getIt()));
 
-  //BLOC AND CUBITS
+  // Blocs and cubits.
   getIt.registerFactory(() => ZoomCameraCubit(getIt()));
   getIt.registerFactory(() => OverlayCubit());
   getIt.registerFactory(() => NavigationBarCubit());
   getIt.registerFactory(() => HistoryCubit());
-
-  // final prefers = await SharedPreferences.getInstance();
-  // getIt.registerLazySingleton(() => prefers);
-  // getIt.registerLazySingleton(() => LocalConfig(preferences: getIt()));
+  getIt.registerFactory(() => SettingsCubit(config: getIt()));
+  getIt.registerFactory(
+    () => QrCustomizationCubit(
+      loadUseCase: getIt(),
+      saveUseCase: getIt(),
+      repository: getIt(),
+    ),
+  );
 
   getIt.registerFactory(
     () => HistoryBloc(

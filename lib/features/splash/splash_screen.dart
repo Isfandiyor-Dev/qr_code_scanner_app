@@ -6,10 +6,13 @@ import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
 import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
 import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
 import 'package:qr_code_scanner_app/features/root/presentation/screens/screens_manager.dart';
+import 'package:qr_code_scanner_app/gen/assets.gen.dart';
 import 'package:share_handler/share_handler.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
+/// Splash screen that routes shared images or opens the main app shell.
 class SplashScreen extends StatefulWidget {
+  /// Creates the splash screen.
   const SplashScreen({super.key});
 
   @override
@@ -31,11 +34,11 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  /// Initializes share handling before deciding the first route.
   Future<void> _initShareHandler() async {
-    // Share orqali keldi mi yoki yo‘q
     _sharedMedia = await _shareHandler.getInitialSharedMedia();
 
-    // Agar ilova backgroundda bo‘lsa, kelgan yangi sharingni ham tinglaymiz
+    // Continue listening so shared images are handled when the app is resumed.
     _shareHandler.sharedMediaStream.listen((SharedMedia media) {
       if (mounted) {
         setState(() {
@@ -44,17 +47,16 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
-    // 0.5 soniya kutamiz, shunda animatsiya bo‘lsin
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (_sharedMedia?.attachments?.isNotEmpty ?? false) {
       await _handleSharedMedia(_sharedMedia!);
     } else {
-      // Oddiy ishga tushish holati
       _navigateToHome();
     }
   }
 
+  /// Attempts to decode a QR code from an image shared into the app.
   Future<void> _handleSharedMedia(SharedMedia media) async {
     try {
       final files = media.attachments;
@@ -65,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
         return;
       }
 
-      // Faqat birinchi fayl bilan ishlaymiz (ko‘p rasm yuborilsa)
+      // Only the first attachment is processed because the result screen shows one QR.
       final firstFile = files.first;
       final filePath = firstFile?.path;
 
@@ -75,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
         return;
       }
 
-      // Faqat rasm formatlariga ruxsat
+      // Keep decoding limited to image formats supported by MobileScanner.
       final ext = filePath.split('.').last.toLowerCase();
       if (!['jpg', 'jpeg', 'png', 'bmp', 'gif', 'webp'].contains(ext)) {
         showErrorSnackBar("Please share a valid image file.", context);
@@ -98,7 +100,6 @@ class _SplashScreenState extends State<SplashScreen> {
         return;
       }
 
-      // ✅ QR code topildi → natija sahifasiga o‘tamiz
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -114,6 +115,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  /// Opens the main application shell.
   void _navigateToHome() {
     Navigator.pushReplacement(
       context,
@@ -126,7 +128,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: SvgPicture.asset(
-          'assets/icons/logo.svg',
+          Assets.icons.logo.path,
           width: 65,
           height: 65,
         ),

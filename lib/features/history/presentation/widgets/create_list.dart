@@ -6,9 +6,12 @@ import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/h
 import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_state.dart';
 import 'package:qr_code_scanner_app/features/history/data_source/models/scan_qr/scan_qr_model.dart';
 import 'package:qr_code_scanner_app/features/history/presentation/widgets/history_list_view.dart';
+import 'package:qr_code_scanner_app/gen/assets.gen.dart';
 import 'package:svg_flutter/svg.dart';
 
+/// Shows history entries created by the QR generator.
 class CreateList extends StatefulWidget {
+  /// Creates the generated-history list.
   const CreateList({super.key});
 
   @override
@@ -39,8 +42,7 @@ class _CreateListState extends State<CreateList> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    "assets/empty.svg",
+                  Assets.empty.svg(
                     width: 65,
                     height: 65,
                   ),

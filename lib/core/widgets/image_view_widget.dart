@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
+/// Displays a plain QR code preview for [message].
 class QrImageViewWidget extends StatelessWidget {
+  /// Payload encoded into the QR image.
   final String message;
+
+  /// Creates a QR image preview for [message].
   const QrImageViewWidget({super.key, required this.message});
 
   @override
@@ -18,10 +22,6 @@ class QrImageViewWidget extends StatelessWidget {
         data: message,
         decoration: const PrettyQrDecoration(
           background: Colors.white,
-          // image: PrettyQrDecorationImage(
-          //   image: AssetImage("assets/icons/google.png"),
-          //   filterQuality: FilterQuality.high,
-          // ),
           shape: PrettyQrSmoothSymbol(
             roundFactor: 0.6,
           ),

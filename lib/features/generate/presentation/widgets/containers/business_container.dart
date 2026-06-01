@@ -12,9 +12,12 @@ import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/enums/result_screen.dart';
 
+/// Form used to generate a business-profile QR code.
 class BusinessContainer extends StatefulWidget {
+  /// Icon displayed above the business form.
   final String iconPath;
 
+  /// Creates a business QR generation form.
   const BusinessContainer({super.key, required this.iconPath});
 
   @override
@@ -49,7 +52,7 @@ class _BusinessContainerState extends State<BusinessContainer> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey, // 🔹 Form bilan validatsiyani bog‘ladik
+      key: _formKey,
       child: Container(
         margin: const EdgeInsets.all(25),
         padding: const EdgeInsets.all(20),
@@ -65,8 +68,6 @@ class _BusinessContainerState extends State<BusinessContainer> {
           children: [
             SvgPicture.asset(widget.iconPath, height: 64, width: 64),
             const Gap(20),
-
-            // ✅ Majburiy maydonlar
             CustomTextField(
               hintText: "Enter name",
               fieldLabel: 'Company Name *',
@@ -90,8 +91,6 @@ class _BusinessContainerState extends State<BusinessContainer> {
               validator: (value) =>
                   value == null || value.isEmpty ? "Phone required" : null,
             ),
-
-            // 🟡 Optional maydonlar
             CustomTextField(
               hintText: "Enter email",
               fieldLabel: 'Email',
@@ -128,19 +127,15 @@ class _BusinessContainerState extends State<BusinessContainer> {
               ],
             ),
             const SizedBox(height: 20),
-
-            // 🔘 Tugma
             GenerateButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   Map<String, dynamic> data = {};
 
-                  // required fields
                   data["Company Name"] = companyNameController.text.trim();
                   data["Industry"] = industryController.text.trim();
                   data["Phone"] = phoneController.text.trim();
 
-                  // optional fields (faqat to‘lgan bo‘lsa qo‘shiladi)
                   void addIfNotEmpty(String key, String value) {
                     if (value.trim().isNotEmpty) data[key] = value.trim();
                   }
@@ -151,7 +146,6 @@ class _BusinessContainerState extends State<BusinessContainer> {
                   addIfNotEmpty("City", cityController.text);
                   addIfNotEmpty("Country", countryController.text);
 
-                  // Bloc event
                   BlocProvider.of<HistoryBloc>(context).add(
                     AddHistoryEvent(
                       code: jsonEncode(data),
@@ -159,7 +153,6 @@ class _BusinessContainerState extends State<BusinessContainer> {
                     ),
                   );
 
-                  // Navigate to result page
                   Navigator.push(
                     context,
                     MaterialPageRoute(

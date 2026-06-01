@@ -11,8 +11,12 @@ import 'package:qr_code_scanner_app/features/result_screen/presentation/result_p
 import 'package:svg_flutter/svg.dart';
 import '../../../../../core/enums/result_screen.dart';
 
+/// Form used to generate an event-details QR code.
 class EventContainer extends StatefulWidget {
+  /// Icon displayed above the event form.
   final String iconPath;
+
+  /// Creates an event QR generation form.
   const EventContainer({super.key, required this.iconPath});
 
   @override
@@ -38,11 +42,10 @@ class _EventContainerState extends State<EventContainer> {
     super.dispose();
   }
 
-  /// 📅 Sana va vaqtni tanlash funksiyasi
+  /// Opens date and time pickers and writes the formatted value to [controller].
   Future<void> _pickDateTime(TextEditingController controller) async {
     final now = DateTime.now();
 
-    // Sana tanlash
     final DateTime? date = await showDatePicker(
       context: context,
       initialDate: now,
@@ -53,7 +56,6 @@ class _EventContainerState extends State<EventContainer> {
 
     if (date == null) return;
 
-    // Vaqt tanlash
     final TimeOfDay? time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -62,7 +64,6 @@ class _EventContainerState extends State<EventContainer> {
 
     if (time == null) return;
 
-    // DateTime obyektini birlashtirish
     final DateTime fullDateTime = DateTime(
       date.year,
       date.month,
@@ -71,7 +72,6 @@ class _EventContainerState extends State<EventContainer> {
       time.minute,
     );
 
-    // Formatlash
     final formatted = DateFormat('yyyy-MM-dd HH:mm').format(fullDateTime);
 
     setState(() {
@@ -99,8 +99,6 @@ class _EventContainerState extends State<EventContainer> {
             children: [
               SvgPicture.asset(widget.iconPath),
               const SizedBox(height: 20),
-
-              // 🔹 Required fields
               CustomTextField(
                 fieldLabel: "Event Name *",
                 controller: eventNameController,
@@ -109,8 +107,6 @@ class _EventContainerState extends State<EventContainer> {
                     ? "Event name required"
                     : null,
               ),
-
-              // 📅 Start Date & Time
               GestureDetector(
                 onTap: () => _pickDateTime(startDateController),
                 child: AbsorbPointer(
@@ -124,8 +120,6 @@ class _EventContainerState extends State<EventContainer> {
                   ),
                 ),
               ),
-
-              // 📅 End Date & Time
               GestureDetector(
                 onTap: () => _pickDateTime(endDateController),
                 child: AbsorbPointer(
@@ -139,8 +133,6 @@ class _EventContainerState extends State<EventContainer> {
                   ),
                 ),
               ),
-
-              // 🟡 Optional fields
               CustomTextField(
                 fieldLabel: "Event Location",
                 controller: locationController,
@@ -152,21 +144,16 @@ class _EventContainerState extends State<EventContainer> {
                 hintText: 'Enter description',
                 maxLines: 4,
               ),
-
               const SizedBox(height: 20),
-
-              // 🔘 Generate button
               GenerateButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     Map<String, dynamic> data = {};
 
-                    // Required fields
                     data["Event Name"] = eventNameController.text.trim();
                     data["Start Date"] = startDateController.text.trim();
                     data["End Date"] = endDateController.text.trim();
 
-                    // Optional fields
                     void addIfNotEmpty(String key, String value) {
                       if (value.trim().isNotEmpty) data[key] = value.trim();
                     }

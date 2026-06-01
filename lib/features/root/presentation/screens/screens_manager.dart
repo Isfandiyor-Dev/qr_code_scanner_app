@@ -5,8 +5,11 @@ import 'package:qr_code_scanner_app/features/root/presentation/bloc/navigation_b
 import 'package:qr_code_scanner_app/features/generate/presentation/screens/generate_page.dart';
 import 'package:qr_code_scanner_app/features/history/presentation/screens/history_page.dart';
 import 'package:qr_code_scanner_app/features/qr_scanner/presentation/screens/scanner_page.dart';
+import 'package:qr_code_scanner_app/gen/assets.gen.dart';
 
+/// Root shell that switches between Scanner, Generate, and History screens.
 class ScreensManager extends StatefulWidget {
+  /// Creates the root screen manager.
   const ScreensManager({super.key});
 
   @override
@@ -76,7 +79,7 @@ class _ScreensManagerState extends State<ScreensManager> {
             backgroundColor: context.colorScheme.primary,
             shape: const CircleBorder(),
             child: Image.asset(
-              "assets/icons/scan.png",
+              Assets.icons.scan.path,
               width: 30,
             ),
           ),
@@ -86,12 +89,21 @@ class _ScreensManagerState extends State<ScreensManager> {
   }
 }
 
+/// Bottom navigation item used by [ScreensManager].
 class MyBottomBarItem extends StatefulWidget {
+  /// Root page index selected by this item.
   final int index;
+
+  /// Label shown under the icon.
   final String label;
+
+  /// Icon displayed above the label.
   final IconData icon;
+
+  /// Whether this item represents the active page.
   final bool isSelected;
 
+  /// Creates a bottom navigation item.
   const MyBottomBarItem({
     super.key,
     required this.index,

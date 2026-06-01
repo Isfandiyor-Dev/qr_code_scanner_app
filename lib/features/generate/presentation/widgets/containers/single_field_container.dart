@@ -10,11 +10,18 @@ import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/enums/result_screen.dart';
 
+/// Form used by QR types that only require one text field.
 class SingleFieldContainer extends StatefulWidget {
+  /// Display name of the generated QR type.
   final String name;
+
+  /// Icon displayed above the form.
   final String iconPath;
+
+  /// Label shown for the input field.
   final String fieldLabel;
 
+  /// Creates a single-field QR generation form.
   const SingleFieldContainer({
     super.key,
     required this.name,
@@ -30,12 +37,11 @@ class _SingleFieldContainerState extends State<SingleFieldContainer> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textController = TextEditingController();
 
-  // Validator funksiyasi — senior uslub: bir joyda yozib, qayta ishlatamiz
   String? _nonEmptyValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'This field cannot be empty.';
     }
-    return null; // valid
+    return null;
   }
 
   @override
@@ -45,11 +51,9 @@ class _SingleFieldContainerState extends State<SingleFieldContainer> {
   }
 
   void _onGeneratePressed(BuildContext context) {
-    // Formni tekshiramiz — agar false bo'lsa errorlar ko'rsatiladi
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    // Hamma narsa ok bo'lsa davom etamiz
     BlocProvider.of<HistoryBloc>(context).add(
       AddHistoryEvent(
         code: _textController.text,
@@ -70,8 +74,6 @@ class _SingleFieldContainerState extends State<SingleFieldContainer> {
 
   @override
   Widget build(BuildContext context) {
-    // Eslatma: FormFieldlarni qayta validatsiya qilish uchun onChanged ichida validate chaqiramiz,
-    // lekin setState ishlatmaymiz — formKey orqali validate() o‘zini qayta chizadi va errorni yangilaydi.
     return Container(
       height: MediaQuery.of(context).size.height * 0.37,
       width: MediaQuery.of(context).size.width * 0.78,
@@ -94,11 +96,6 @@ class _SingleFieldContainerState extends State<SingleFieldContainer> {
               controller: _textController,
               hintText: '',
               validator: _nonEmptyValidator,
-              // onChanged: (value) {
-              //   // Har bir o'zgarishda maydonni qayta tekshiramiz.
-              //   // Bu setState ishlatmaydi, FormField errorlarini yangilaydi.
-              //   _formKey.currentState?.validate();
-              // },
             ),
             GenerateButton(
               onPressed: () => _onGeneratePressed(context),

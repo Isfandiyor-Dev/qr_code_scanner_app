@@ -4,7 +4,9 @@ import 'package:qr_code_scanner_app/features/history/presentation/bloc/history_c
 import 'package:qr_code_scanner_app/features/history/presentation/widgets/create_list.dart';
 import 'package:qr_code_scanner_app/features/history/presentation/widgets/scan_list.dart';
 
+/// Displays scanned and generated QR history in separate tabs.
 class QrHistoryPage extends StatefulWidget {
+  /// Creates the history page.
   const QrHistoryPage({super.key});
 
   @override
@@ -12,7 +14,6 @@ class QrHistoryPage extends StatefulWidget {
 }
 
 class _QrHistoryPageState extends State<QrHistoryPage> {
-  
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HistoryCubit, int>(builder: (context, state) {

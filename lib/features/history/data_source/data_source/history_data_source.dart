@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
+/// Local sqflite data source for scanned and generated QR history.
 class HistoryDataSource {
   static final HistoryDataSource _instance = HistoryDataSource._internal();
   static Database? _database;
@@ -13,6 +14,7 @@ class HistoryDataSource {
 
   HistoryDataSource._internal();
 
+  /// Lazily opens the history database.
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
@@ -39,9 +41,9 @@ class HistoryDataSource {
       ''');
   }
 
+  /// Inserts [qrCode] or refreshes its timestamp when the same code exists.
   Future<int> insertQrCode(QrCodeRequest qrCode) async {
     final Database db = await database;
-    // Avval shu kod bazada bormi, tekshiramiz
     final existing = await db.query(
       'history',
       where: 'code = ?',
@@ -49,7 +51,6 @@ class HistoryDataSource {
     );
 
     if (existing.isNotEmpty) {
-      // Agar bor bo‘lsa — faqat vaqtini yangilaymiz
       return await db.update(
         'history',
         {'scannedAt': DateTime.now().toIso8601String()},
@@ -57,16 +58,17 @@ class HistoryDataSource {
         whereArgs: [qrCode.code],
       );
     } else {
-      // Agar yo‘q bo‘lsa — yangi yozuv qo‘shamiz
       return await db.insert('history', qrCode.toJson());
     }
   }
 
+  /// Returns all stored QR history rows.
   Future<List<Map<String, dynamic>>> getQrCodes() async {
     Database db = await database;
     return await db.query('history');
   }
 
+  /// Deletes a QR history row by database [id].
   Future<int> deleteQrCode(int id) async {
     Database db = await database;
     return await db.delete('history', where: 'id = ?', whereArgs: [id]);

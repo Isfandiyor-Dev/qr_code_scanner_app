@@ -5,123 +5,121 @@ import 'package:qr_code_scanner_app/features/generate/presentation/widgets/conta
 import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/location_container.dart';
 import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/single_field_container.dart';
 import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/wifi_container.dart';
+import 'package:qr_code_scanner_app/gen/assets.gen.dart';
 
+/// Provides the available QR generation templates shown on the Generate screen.
 class GenQrTypes {
+  /// Ordered list of QR templates and their matching input forms.
   final List<GenBox> genBoxes = [
-    // 1. Eng ko‘p ishlatiladiganlar
     SingleFieldBox(
       name: "Text",
-      iconPath: "assets/gen_icons/text.svg",
+      iconPath: Assets.genIcons.text.path,
       fieldLabel: "Text",
       hintText: "Enter text",
-      generateContainer: const SingleFieldContainer(
+      generateContainer: SingleFieldContainer(
         name: "Text",
-        iconPath: "assets/gen_icons/text.svg",
+        iconPath: Assets.genIcons.text.path,
         fieldLabel: "Text",
       ),
     ),
     SingleFieldBox(
       name: "Website",
-      iconPath: "assets/gen_icons/website.svg",
+      iconPath: Assets.genIcons.website.path,
       fieldLabel: "Website URL",
       hintText: "Enter website URL",
-      generateContainer: const SingleFieldContainer(
+      generateContainer: SingleFieldContainer(
         name: "Website",
-        iconPath: "assets/gen_icons/website.svg",
+        iconPath: Assets.genIcons.website.path,
         fieldLabel: "Website URL",
       ),
     ),
     GenBox(
       name: "Wi-Fi",
-      iconPath: "assets/gen_icons/wifi.svg",
-      generateContainer: const WifiContainer(
-        iconPath: "assets/gen_icons/wifi.svg",
+      iconPath: Assets.genIcons.wifi.path,
+      generateContainer: WifiContainer(
+        iconPath: Assets.genIcons.wifi.path,
       ),
     ),
     GenBox(
       name: "Contact",
-      iconPath: "assets/gen_icons/contact.svg",
-      generateContainer: const ContactContainer(
-        iconPath: "assets/gen_icons/contact.svg",
+      iconPath: Assets.genIcons.contact.path,
+      generateContainer: ContactContainer(
+        iconPath: Assets.genIcons.contact.path,
       ),
     ),
     GenBox(
       name: "Location",
-      iconPath: "assets/gen_icons/location.svg",
-      generateContainer: const LocationContainer(
-        iconPath: "assets/gen_icons/location.svg",
+      iconPath: Assets.genIcons.location.path,
+      generateContainer: LocationContainer(
+        iconPath: Assets.genIcons.location.path,
       ),
     ),
-
-    // 2. O‘rta darajadagilar
     SingleFieldBox(
       name: "WhatsApp",
-      iconPath: "assets/gen_icons/whatsapp.svg",
+      iconPath: Assets.genIcons.whatsapp.path,
       fieldLabel: "WhatsApp Number",
       hintText: "Enter WhatsApp number",
-      generateContainer: const SingleFieldContainer(
+      generateContainer: SingleFieldContainer(
         name: "WhatsApp",
-        iconPath: "assets/gen_icons/whatsapp.svg",
+        iconPath: Assets.genIcons.whatsapp.path,
         fieldLabel: "WhatsApp Number",
       ),
     ),
     SingleFieldBox(
       name: "Email",
-      iconPath: "assets/gen_icons/email.svg",
+      iconPath: Assets.genIcons.email.path,
       fieldLabel: "Email",
       hintText: "Enter email",
-      generateContainer: const SingleFieldContainer(
+      generateContainer: SingleFieldContainer(
         name: "Email",
-        iconPath: "assets/gen_icons/email.svg",
+        iconPath: Assets.genIcons.email.path,
         fieldLabel: "Email",
       ),
     ),
     SingleFieldBox(
       name: "Telephone",
-      iconPath: "assets/gen_icons/telephone.svg",
+      iconPath: Assets.genIcons.telephone.path,
       fieldLabel: "Phone Number",
       hintText: "Enter phone number",
-      generateContainer: const SingleFieldContainer(
+      generateContainer: SingleFieldContainer(
         name: "Telephone",
-        iconPath: "assets/gen_icons/telephone.svg",
+        iconPath: Assets.genIcons.telephone.path,
         fieldLabel: "Phone Number",
       ),
     ),
-
-    // 3. Kamroq ishlatiladiganlar
     GenBox(
       name: "Event",
-      iconPath: "assets/gen_icons/event.svg",
-      generateContainer: const EventContainer(
-        iconPath: "assets/gen_icons/event.svg",
+      iconPath: Assets.genIcons.event.path,
+      generateContainer: EventContainer(
+        iconPath: Assets.genIcons.event.path,
       ),
     ),
     GenBox(
       name: "Business",
-      iconPath: "assets/gen_icons/business.svg",
-      generateContainer: const BusinessContainer(
-        iconPath: "assets/gen_icons/business.svg",
+      iconPath: Assets.genIcons.business.path,
+      generateContainer: BusinessContainer(
+        iconPath: Assets.genIcons.business.path,
       ),
     ),
     SingleFieldBox(
       name: "Twitter",
-      iconPath: "assets/gen_icons/twitter.svg",
+      iconPath: Assets.genIcons.twitter.path,
       fieldLabel: "Username",
       hintText: "Enter Twitter username",
-      generateContainer: const SingleFieldContainer(
+      generateContainer: SingleFieldContainer(
         name: "Twitter",
-        iconPath: "assets/gen_icons/twitter.svg",
+        iconPath: Assets.genIcons.twitter.path,
         fieldLabel: "Username",
       ),
     ),
     SingleFieldBox(
       name: "Instagram",
-      iconPath: "assets/gen_icons/instagram.svg",
+      iconPath: Assets.genIcons.instagram.path,
       fieldLabel: "Username",
       hintText: "Enter Instagram username",
-      generateContainer: const SingleFieldContainer(
+      generateContainer: SingleFieldContainer(
         name: "Instagram",
-        iconPath: "assets/gen_icons/instagram.svg",
+        iconPath: Assets.genIcons.instagram.path,
         fieldLabel: "Username",
       ),
     ),

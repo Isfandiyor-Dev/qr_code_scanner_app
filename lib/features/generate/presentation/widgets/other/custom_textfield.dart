@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 
+/// Signature used by generated form fields to validate text input.
 typedef FieldValidator = String? Function(String? value);
 
+/// Shared styled text field used across QR generation forms.
 class CustomTextField extends StatelessWidget {
+  /// Label displayed above the field.
   final String fieldLabel;
-  final TextEditingController controller;
-  final String hintText;
-  final int maxLines;
-  final FieldValidator? validator;
-  final TextInputType? keyboardType;
-  // final ValueChanged<String>? onChanged;
 
+  /// Controller that owns the field value.
+  final TextEditingController controller;
+
+  /// Placeholder text displayed when the field is empty.
+  final String hintText;
+
+  /// Maximum number of visible text lines.
+  final int maxLines;
+
+  /// Optional validation callback.
+  final FieldValidator? validator;
+
+  /// Optional keyboard type for platform input optimization.
+  final TextInputType? keyboardType;
+
+  /// Creates a styled form text field.
   const CustomTextField({
     super.key,
     required this.fieldLabel,
@@ -20,7 +33,6 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.validator,
     this.keyboardType,
-    // this.onChanged,
   });
 
   @override
@@ -41,7 +53,6 @@ class CustomTextField extends StatelessWidget {
           keyboardType: keyboardType,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: validator,
-          // onChanged: onChanged,
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 10, vertical: 14),

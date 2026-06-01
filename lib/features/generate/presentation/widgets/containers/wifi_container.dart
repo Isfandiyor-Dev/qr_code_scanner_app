@@ -9,9 +9,12 @@ import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other
 import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
+/// Form used to generate a Wi-Fi network QR code.
 class WifiContainer extends StatefulWidget {
+  /// Icon displayed above the Wi-Fi form.
   final String iconPath;
 
+  /// Creates a Wi-Fi QR generation form.
   const WifiContainer({
     super.key,
     required this.iconPath,
@@ -27,7 +30,7 @@ class _WifiContainerState extends State<WifiContainer> {
   final TextEditingController networkNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  String selectedType = 'WPA'; // default qiymat
+  String selectedType = 'WPA';
 
   @override
   void dispose() {
@@ -53,7 +56,7 @@ class _WifiContainerState extends State<WifiContainer> {
   void _onGeneratePressed(BuildContext context) {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
-    // Wi-Fi data string — standart formatda
+    // The WIFI payload format is recognized by most QR scanners and OS cameras.
     final data =
         'WIFI:T:$selectedType;S:${networkNameController.text};P:${passwordController.text};;';
 
@@ -96,8 +99,6 @@ class _WifiContainerState extends State<WifiContainer> {
             children: [
               SvgPicture.asset(widget.iconPath),
               const SizedBox(height: 20),
-
-              /// 🔸 SECURITY TYPE DROPDOWN
               DropdownButtonFormField<String>(
                 initialValue: selectedType,
                 borderRadius: BorderRadius.circular(15),
@@ -138,26 +139,18 @@ class _WifiContainerState extends State<WifiContainer> {
                 },
               ),
               const SizedBox(height: 20),
-
-              /// 🔸 NETWORK NAME (SSID)
               CustomTextField(
                 fieldLabel: "Network Name (SSID)",
                 controller: networkNameController,
                 hintText: 'Enter network name',
                 validator: _networkNameValidator,
-                // onChanged: (_) => _formKey.currentState?.validate(),
               ),
-
-              /// 🔸 PASSWORD
               CustomTextField(
                 fieldLabel: "Password",
                 controller: passwordController,
                 hintText: 'Enter password',
                 validator: _passwordValidator,
-                // onChanged: (_) => _formKey.currentState?.validate(),
               ),
-
-              /// 🔸 GENERATE BUTTON
               GenerateButton(
                 onPressed: () => _onGeneratePressed(context),
               ),

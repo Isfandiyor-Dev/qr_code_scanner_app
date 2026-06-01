@@ -33,7 +33,6 @@ dependencies:
   intl: ^0.20.2
   pretty_qr_code: ^3.5.0
   uuid: ^4.5.1
-  # shared_preferences: ^2.5.3
   gap: ^3.0.1
   path_provider: ^2.1.5
   share_handler: ^0.0.25
@@ -42,22 +41,39 @@ dependencies:
   mobile_scanner: ^7.2.0
   flex_color_picker: ^3.7.1
   file_picker: ^8.1.7
+  device_info_plus: ^12.4.0
+  flutter_svg: ^2.3.0
+  audioplayers: ^6.7.0
+  vibration: ^3.1.8
+  shared_preferences: ^2.5.5
+  flutter_staggered_animations: ^1.1.1
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_gen_runner: ^5.14.1
+  build_runner: ^2.4.0
 
 flutter:
   uses-material-design: true
   assets:
     - assets/gen_icons/
     - assets/icons/
+    - assets/social_icons/
+    - assets/sound/
     - assets/
   fonts:
     - family: Itim
       fonts:
         - asset: fonts/Itim-Regular.ttf
+flutter_gen:
+  output: lib/gen/
+  line_length: 80
+  integrations:
+    flutter_svg: true
+
 platform:
-  android: 
-  ios: 
+  android:
+  ios:

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
 
+/// Reusable rounded back button used by pages with custom app bars.
 class BackWidget extends StatelessWidget {
+  /// Optional callback. Defaults to [Navigator.pop] when omitted.
   final GestureTapCallback? onTap;
+
+  /// Creates a back button with an optional custom tap handler.
   const BackWidget({super.key, this.onTap});
 
   @override

@@ -10,9 +10,12 @@ import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/enums/result_screen.dart';
 
+/// Form used to generate a vCard contact QR code.
 class ContactContainer extends StatefulWidget {
+  /// Icon displayed above the contact form.
   final String iconPath;
 
+  /// Creates a contact QR generation form.
   const ContactContainer({super.key, required this.iconPath});
 
   @override
@@ -144,8 +147,6 @@ class _ContactContainerState extends State<ContactContainer> {
             children: [
               Center(child: SvgPicture.asset(widget.iconPath)),
               const SizedBox(height: 20),
-
-              /// REQUIRED FIELDS
               CustomTextField(
                 fieldLabel: 'First Name *',
                 controller: nameController,
@@ -190,8 +191,6 @@ class _ContactContainerState extends State<ContactContainer> {
                   return null;
                 },
               ),
-
-              /// OPTIONAL FIELDS
               CustomTextField(
                 fieldLabel: 'Company',
                 controller: companyController,
@@ -224,7 +223,6 @@ class _ContactContainerState extends State<ContactContainer> {
                 hintText: 'Enter country',
               ),
               const SizedBox(height: 20),
-
               Center(child: GenerateButton(onPressed: _onGenerate)),
             ],
           ),
