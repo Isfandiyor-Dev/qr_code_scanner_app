@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// A compact labeled switch row used for boolean design options (unified eyes,
 /// logo shadow, transparent background, and similar options).
@@ -28,8 +28,7 @@ class DesignerSwitchTile extends StatelessWidget {
       child: Row(
         children: [
           if (icon != null) ...[
-            Icon(icon,
-                size: 17, color: colorScheme.onSurface.withValues(alpha: 0.7)),
+            Icon(icon, size: 17, color: colorScheme.onSurface.withValues(alpha: 0.7)),
             const SizedBox(width: 8),
           ],
           Expanded(

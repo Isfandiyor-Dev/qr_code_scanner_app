@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_code_scanner_app/core/di/di.dart';
-import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
-import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
-import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
-import 'package:qr_code_scanner_app/features/root/presentation/screens/screens_manager.dart';
-import 'package:qr_code_scanner_app/gen/assets.gen.dart';
+import 'package:qr_code_app/core/di/di.dart';
+import 'package:qr_code_app/core/widgets/snackbar.dart';
+import 'package:qr_code_app/features/result_screen/presentation/result_page.dart';
+import 'package:qr_code_app/core/enums/result_screen.dart';
+import 'package:qr_code_app/features/root/presentation/screens/screens_manager.dart';
+import 'package:qr_code_app/gen/assets.gen.dart';
 import 'package:share_handler/share_handler.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -129,8 +129,8 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: SvgPicture.asset(
           Assets.icons.logo.path,
-          width: 65,
-          height: 65,
+          width: 80,
+          height: 80,
         ),
       ),
     );

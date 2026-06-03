@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_bloc.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_event.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other/custom_textfield.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other/generate_button.dart';
-import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_bloc.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_event.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/other/custom_textfield.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/other/generate_button.dart';
+import 'package:qr_code_app/features/result_screen/presentation/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/enums/result_screen.dart';
@@ -72,24 +72,20 @@ class _BusinessContainerState extends State<BusinessContainer> {
               hintText: "Enter name",
               fieldLabel: 'Company Name *',
               controller: companyNameController,
-              validator: (value) => value == null || value.isEmpty
-                  ? "Company name required"
-                  : null,
+              validator: (value) => value == null || value.isEmpty ? "Company name required" : null,
             ),
             CustomTextField(
               hintText: "e.g Food/Agency",
               fieldLabel: 'Industry *',
               controller: industryController,
-              validator: (value) =>
-                  value == null || value.isEmpty ? "Industry required" : null,
+              validator: (value) => value == null || value.isEmpty ? "Industry required" : null,
             ),
             CustomTextField(
               hintText: "Enter phone",
               fieldLabel: 'Phone *',
               controller: phoneController,
               keyboardType: TextInputType.phone,
-              validator: (value) =>
-                  value == null || value.isEmpty ? "Phone required" : null,
+              validator: (value) => value == null || value.isEmpty ? "Phone required" : null,
             ),
             CustomTextField(
               hintText: "Enter email",

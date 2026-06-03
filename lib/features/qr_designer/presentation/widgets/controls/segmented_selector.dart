@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// A single option within a [SegmentedSelector].
 class SegmentedOption<T> {
@@ -65,9 +65,8 @@ class _Segment<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.colorScheme;
-    final foreground = selected
-        ? colorScheme.secondary
-        : colorScheme.onSurface.withValues(alpha: 0.7);
+    final foreground =
+        selected ? colorScheme.secondary : colorScheme.onSurface.withValues(alpha: 0.7);
 
     return GestureDetector(
       onTap: onTap,
@@ -84,7 +83,7 @@ class _Segment<T> extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (option.icon != null) ...[
-              Icon(option.icon, size: 19, color: foreground),
+              Icon(option.icon, size: 19),
               const SizedBox(height: 4),
             ],
             Text(
@@ -93,7 +92,6 @@ class _Segment<T> extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: context.textTheme.labelSmall?.copyWith(
-                color: foreground,
                 fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
               ),
             ),

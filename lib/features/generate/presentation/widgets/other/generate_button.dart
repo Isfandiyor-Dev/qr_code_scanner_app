@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// Primary button used to submit QR generation forms.
 class GenerateButton extends StatelessWidget {
@@ -25,8 +25,7 @@ class GenerateButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         "Generate QR Code",
-        style: context.textTheme.labelLarge
-            ?.copyWith(color: context.colorScheme.secondary),
+        style: context.textTheme.labelLarge?.copyWith(color: context.colorScheme.secondary),
       ),
     );
   }

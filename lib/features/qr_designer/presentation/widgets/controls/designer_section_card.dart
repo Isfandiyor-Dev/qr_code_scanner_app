@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// A consistent, premium card wrapper used to group designer controls.
 ///

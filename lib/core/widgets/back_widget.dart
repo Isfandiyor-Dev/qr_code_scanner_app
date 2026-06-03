@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// Reusable rounded back button used by pages with custom app bars.
 class BackWidget extends StatelessWidget {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_bloc.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_event.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other/custom_textfield.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other/generate_button.dart';
-import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
+import 'package:qr_code_app/core/enums/result_screen.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_bloc.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_event.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/other/custom_textfield.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/other/generate_button.dart';
+import 'package:qr_code_app/features/result_screen/presentation/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 /// Form used to generate a Wi-Fi network QR code.
@@ -108,8 +108,7 @@ class _WifiContainerState extends State<WifiContainer> {
                   fillColor: context.colorScheme.primaryContainer,
                   labelStyle: const TextStyle(color: Colors.white),
                   enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xffD9D9D9), width: 0.8),
+                    borderSide: BorderSide(color: Color(0xffD9D9D9), width: 0.8),
                   ),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.amber, width: 1),

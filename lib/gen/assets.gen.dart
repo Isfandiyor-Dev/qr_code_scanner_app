@@ -83,10 +83,6 @@ class $AssetsGenIconsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
-  /// File path: assets/icons/history_item_leading.png
-  AssetGenImage get historyItemLeading =>
-      const AssetGenImage('assets/icons/history_item_leading.png');
-
   /// File path: assets/icons/logo.svg
   SvgGenImage get logo => const SvgGenImage('assets/icons/logo.svg');
 
@@ -97,7 +93,102 @@ class $AssetsIconsGen {
   SvgGenImage get settings => const SvgGenImage('assets/icons/settings.svg');
 
   /// List of all assets
-  List<dynamic> get values => [historyItemLeading, logo, scan, settings];
+  List<dynamic> get values => [logo, scan, settings];
+}
+
+class $AssetsSocialIconsGen {
+  const $AssetsSocialIconsGen();
+
+  /// File path: assets/social_icons/Behance.svg
+  SvgGenImage get behance =>
+      const SvgGenImage('assets/social_icons/Behance.svg');
+
+  /// File path: assets/social_icons/Dribbble.svg
+  SvgGenImage get dribbble =>
+      const SvgGenImage('assets/social_icons/Dribbble.svg');
+
+  /// File path: assets/social_icons/Facebook.svg
+  SvgGenImage get facebook =>
+      const SvgGenImage('assets/social_icons/Facebook.svg');
+
+  /// File path: assets/social_icons/Instagram.svg
+  SvgGenImage get instagram =>
+      const SvgGenImage('assets/social_icons/Instagram.svg');
+
+  /// File path: assets/social_icons/LinkedIn.svg
+  SvgGenImage get linkedIn =>
+      const SvgGenImage('assets/social_icons/LinkedIn.svg');
+
+  /// File path: assets/social_icons/Messenger.svg
+  SvgGenImage get messenger =>
+      const SvgGenImage('assets/social_icons/Messenger.svg');
+
+  /// File path: assets/social_icons/Pinterest.svg
+  SvgGenImage get pinterest =>
+      const SvgGenImage('assets/social_icons/Pinterest.svg');
+
+  /// File path: assets/social_icons/Skype.svg
+  SvgGenImage get skype => const SvgGenImage('assets/social_icons/Skype.svg');
+
+  /// File path: assets/social_icons/Snapchat.svg
+  SvgGenImage get snapchat =>
+      const SvgGenImage('assets/social_icons/Snapchat.svg');
+
+  /// File path: assets/social_icons/Telegram.svg
+  SvgGenImage get telegram =>
+      const SvgGenImage('assets/social_icons/Telegram.svg');
+
+  /// File path: assets/social_icons/Threads.svg
+  SvgGenImage get threads =>
+      const SvgGenImage('assets/social_icons/Threads.svg');
+
+  /// File path: assets/social_icons/TikTok.svg
+  SvgGenImage get tikTok => const SvgGenImage('assets/social_icons/TikTok.svg');
+
+  /// File path: assets/social_icons/Twitter.svg
+  SvgGenImage get twitter =>
+      const SvgGenImage('assets/social_icons/Twitter.svg');
+
+  /// File path: assets/social_icons/WhatsApp.svg
+  SvgGenImage get whatsApp =>
+      const SvgGenImage('assets/social_icons/WhatsApp.svg');
+
+  /// File path: assets/social_icons/X.svg
+  SvgGenImage get x => const SvgGenImage('assets/social_icons/X.svg');
+
+  /// File path: assets/social_icons/YouTube.svg
+  SvgGenImage get youTube =>
+      const SvgGenImage('assets/social_icons/YouTube.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+        behance,
+        dribbble,
+        facebook,
+        instagram,
+        linkedIn,
+        messenger,
+        pinterest,
+        skype,
+        snapchat,
+        telegram,
+        threads,
+        tikTok,
+        twitter,
+        whatsApp,
+        x,
+        youTube
+      ];
+}
+
+class $AssetsSoundGen {
+  const $AssetsSoundGen();
+
+  /// File path: assets/sound/beep.mp3
+  String get beep => 'assets/sound/beep.mp3';
+
+  /// List of all assets
+  List<String> get values => [beep];
 }
 
 class Assets {
@@ -107,6 +198,8 @@ class Assets {
   static const $AssetsGenIconsGen genIcons = $AssetsGenIconsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const SvgGenImage qrcode = SvgGenImage('assets/qrcode.svg');
+  static const $AssetsSocialIconsGen socialIcons = $AssetsSocialIconsGen();
+  static const $AssetsSoundGen sound = $AssetsSoundGen();
 
   /// List of all assets
   static List<SvgGenImage> get values => [empty, qrcode];

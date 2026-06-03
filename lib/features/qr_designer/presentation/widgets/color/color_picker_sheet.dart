@@ -1,6 +1,6 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// A premium modal color picker built on `flex_color_picker`.
 ///
@@ -85,8 +85,7 @@ class _ColorPickerSheetBodyState extends State<_ColorPickerSheetBody> {
             const SizedBox(height: 16),
             Text(
               widget.title,
-              style: context.textTheme.titleLarge
-                  ?.copyWith(fontWeight: FontWeight.w600),
+              style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
             ColorPicker(
@@ -101,23 +100,18 @@ class _ColorPickerSheetBodyState extends State<_ColorPickerSheetBody> {
               showColorCode: true,
               colorCodeHasColor: true,
               padding: EdgeInsets.zero,
-              heading:
-                  Text('Select color', style: context.textTheme.bodyMedium),
-              subheading:
-                  Text('Select shade', style: context.textTheme.bodySmall),
+              heading: Text('Select color', style: context.textTheme.bodyMedium),
+              subheading: Text('Select shade', style: context.textTheme.bodySmall),
               wheelSubheading: Text(
                 'Selected color and shades',
                 style: context.textTheme.bodySmall,
               ),
-              opacitySubheading:
-                  Text('Opacity', style: context.textTheme.bodySmall),
-              recentColorsSubheading:
-                  Text('Recent', style: context.textTheme.bodySmall),
+              opacitySubheading: Text('Opacity', style: context.textTheme.bodySmall),
+              recentColorsSubheading: Text('Recent', style: context.textTheme.bodySmall),
               showRecentColors: true,
               recentColors: _recent,
               maxRecentColors: 18,
-              onRecentColorsChanged: (colors) =>
-                  setState(() => _recent = colors),
+              onRecentColorsChanged: (colors) => setState(() => _recent = colors),
               pickersEnabled: const {
                 ColorPickerType.both: false,
                 ColorPickerType.primary: true,

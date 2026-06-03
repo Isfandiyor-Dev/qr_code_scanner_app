@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/core/widgets/back_widget.dart';
-import 'package:qr_code_scanner_app/features/history/data_source/models/gen_box/gen_box_model.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/single_field_container.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/widgets/back_widget.dart';
+import 'package:qr_code_app/features/history/data_source/models/gen_box/gen_box_model.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/containers/single_field_container.dart';
 
 /// Hosts the selected QR generation form.
 class QrGeneratePage extends StatelessWidget {
@@ -31,10 +31,9 @@ class QrGeneratePage extends StatelessWidget {
         ),
         leading: BackWidget(),
       ),
-      body:
-          (generateContainer is SingleFieldContainer) || genBox.name == "Wi-Fi"
-              ? Center(child: generateContainer)
-              : Center(child: SingleChildScrollView(child: generateContainer)),
+      body: (generateContainer is SingleFieldContainer) || genBox.name == "Wi-Fi"
+          ? Center(child: generateContainer)
+          : Center(child: SingleChildScrollView(child: generateContainer)),
     );
   }
 }

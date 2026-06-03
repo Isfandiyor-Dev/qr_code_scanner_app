@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
+import 'package:qr_code_app/core/widgets/snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Opens the device's Wi-Fi settings for a scanned `WIFI:` QR code.
@@ -30,8 +30,7 @@ class WifiSettingsService {
       await platform.invokeMethod('openWifiSettings');
     } on PlatformException catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(
-            "Failed to open Wi-Fi settings: '${e.message}", context);
+        showErrorSnackBar("Failed to open Wi-Fi settings: '${e.message}", context);
       }
     }
   }

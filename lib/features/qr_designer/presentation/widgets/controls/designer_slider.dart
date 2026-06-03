@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// A labeled slider tile with a live value chip used across the designer.
 class DesignerSlider extends StatelessWidget {
@@ -38,9 +38,7 @@ class DesignerSlider extends StatelessWidget {
         Row(
           children: [
             if (icon != null) ...[
-              Icon(icon,
-                  size: 17,
-                  color: colorScheme.onSurface.withValues(alpha: 0.7)),
+              Icon(icon, size: 17, color: colorScheme.onSurface.withValues(alpha: 0.7)),
               const SizedBox(width: 8),
             ],
             Expanded(
@@ -66,8 +64,7 @@ class DesignerSlider extends StatelessWidget {
           data: SliderThemeData(
             trackHeight: 4,
             activeTrackColor: colorScheme.primary,
-            inactiveTrackColor:
-                colorScheme.outlineVariant.withValues(alpha: 0.35),
+            inactiveTrackColor: colorScheme.outlineVariant.withValues(alpha: 0.35),
             thumbColor: colorScheme.primary,
             overlayColor: colorScheme.primary.withValues(alpha: 0.12),
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 9),

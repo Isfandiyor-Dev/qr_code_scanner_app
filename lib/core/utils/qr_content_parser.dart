@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
+import 'package:qr_code_app/core/enums/result_screen.dart';
 
 /// Pure helpers for interpreting QR payloads by parsing the common formats
 /// (vCard, MeCard, Wi-Fi, JSON) into human-readable text, normalizing contacts,
@@ -162,9 +162,7 @@ END:VCARD
           final street = parts.length > 2 ? parts[2] : '';
           final city = parts.length > 3 ? parts[3] : '';
           final country = parts.length > 6 ? parts[6] : '';
-          address = [street, city, country]
-              .where((part) => part.isNotEmpty)
-              .join(', ');
+          address = [street, city, country].where((part) => part.isNotEmpty).join(', ');
         }
       }
 

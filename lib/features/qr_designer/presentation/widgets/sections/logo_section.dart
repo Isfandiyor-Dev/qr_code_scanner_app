@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../data_source/models/logo_config.dart';
@@ -24,8 +24,7 @@ class LogoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<QrCustomizationCubit, QrCustomizationState>(
-      buildWhen: (previous, current) =>
-          previous.config.logo != current.config.logo,
+      buildWhen: (previous, current) => previous.config.logo != current.config.logo,
       builder: (context, state) {
         final cubit = context.read<QrCustomizationCubit>();
         final logo = state.config.logo;
@@ -39,27 +38,19 @@ class LogoSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SegmentedSelector<LogoType>(
-                    selected: logo.type == LogoType.assetIcon
-                        ? LogoType.materialIcon
-                        : logo.type,
+                    selected: logo.type == LogoType.assetIcon ? LogoType.materialIcon : logo.type,
                     onChanged: (type) => _onLogoTypeSelected(cubit, logo, type),
                     options: const [
                       SegmentedOption(
-                          value: LogoType.none,
-                          label: 'None',
-                          icon: Icons.block_rounded),
+                          value: LogoType.none, label: 'None', icon: Icons.block_rounded),
                       SegmentedOption(
                           value: LogoType.materialIcon,
                           label: 'Icon',
                           icon: Icons.emoji_emotions_rounded),
                       SegmentedOption(
-                          value: LogoType.image,
-                          label: 'Image',
-                          icon: Icons.image_rounded),
+                          value: LogoType.image, label: 'Image', icon: Icons.image_rounded),
                       SegmentedOption(
-                          value: LogoType.svg,
-                          label: 'SVG',
-                          icon: Icons.polyline_rounded),
+                          value: LogoType.svg, label: 'SVG', icon: Icons.polyline_rounded),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -80,8 +71,7 @@ class LogoSection extends StatelessWidget {
                         foregroundColor: context.colorScheme.error,
                         minimumSize: const Size.fromHeight(50),
                         side: BorderSide(
-                          color:
-                              context.colorScheme.error.withValues(alpha: 0.5),
+                          color: context.colorScheme.error.withValues(alpha: 0.5),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
@@ -99,8 +89,7 @@ class LogoSection extends StatelessWidget {
                         foregroundColor: context.colorScheme.onSurface,
                         minimumSize: const Size.fromHeight(50),
                         side: BorderSide(
-                          color: context.colorScheme.outlineVariant
-                              .withValues(alpha: 0.5),
+                          color: context.colorScheme.outlineVariant.withValues(alpha: 0.5),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
@@ -128,8 +117,7 @@ class LogoSection extends StatelessWidget {
     LogoType selected,
   ) {
     if (selected == LogoType.materialIcon) {
-      if (logo.type == LogoType.materialIcon ||
-          logo.type == LogoType.assetIcon) {
+      if (logo.type == LogoType.materialIcon || logo.type == LogoType.assetIcon) {
         return;
       }
       cubit.setLogoType(
@@ -156,11 +144,8 @@ class LogoSection extends StatelessWidget {
       case LogoType.materialIcon:
       case LogoType.assetIcon:
         return LogoIconGrid(
-          selectedCodePoint: logo.type == LogoType.materialIcon
-              ? logo.materialIconCodePoint
-              : null,
-          selectedAssetPath:
-              logo.type == LogoType.assetIcon ? logo.assetIconPath : null,
+          selectedCodePoint: logo.type == LogoType.materialIcon ? logo.materialIconCodePoint : null,
+          selectedAssetPath: logo.type == LogoType.assetIcon ? logo.assetIconPath : null,
           onSelectMaterial: cubit.setMaterialIcon,
           onSelectSocial: cubit.setSocialIcon,
         );
@@ -178,9 +163,8 @@ class LogoSection extends StatelessWidget {
           label: 'Upload SVG file',
           icon: Icons.upload_file_rounded,
           onTap: cubit.pickLogoSvg,
-          preview: logo.svgPath != null
-              ? _filePreview(context, File(logo.svgPath!), isSvg: true)
-              : null,
+          preview:
+              logo.svgPath != null ? _filePreview(context, File(logo.svgPath!), isSvg: true) : null,
         );
     }
   }
@@ -231,8 +215,7 @@ class _UploadRow extends StatelessWidget {
             onPressed: onTap,
             style: FilledButton.styleFrom(
               minimumSize: const Size.fromHeight(50),
-              backgroundColor:
-                  context.colorScheme.primaryContainer.withValues(alpha: 0.8),
+              backgroundColor: context.colorScheme.primaryContainer.withValues(alpha: 0.8),
               foregroundColor: context.colorScheme.onSurface,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
@@ -277,17 +260,13 @@ class _LogoStyleCard extends StatelessWidget {
             onChanged: cubit.setLogoShape,
             options: const [
               SegmentedOption(
-                  value: LogoShape.circle,
-                  label: 'Circle',
-                  icon: Icons.circle_outlined),
+                  value: LogoShape.circle, label: 'Circle', icon: Icons.circle_outlined),
               SegmentedOption(
                   value: LogoShape.roundedRect,
                   label: 'Rounded',
                   icon: Icons.rounded_corner_rounded),
               SegmentedOption(
-                  value: LogoShape.square,
-                  label: 'Square',
-                  icon: Icons.square_outlined),
+                  value: LogoShape.square, label: 'Square', icon: Icons.square_outlined),
             ],
           ),
           if (logo.shape == LogoShape.roundedRect) ...[

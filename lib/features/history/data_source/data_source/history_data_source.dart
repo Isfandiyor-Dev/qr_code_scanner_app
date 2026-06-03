@@ -1,4 +1,4 @@
-import 'package:qr_code_scanner_app/features/history/data_source/models/scan_qr/scan_qr_request.dart';
+import 'package:qr_code_app/features/history/data_source/models/scan_qr/scan_qr_request.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';

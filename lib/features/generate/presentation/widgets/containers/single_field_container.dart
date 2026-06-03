@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_bloc.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_event.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other/custom_textfield.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/other/generate_button.dart';
-import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_bloc.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_event.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/other/custom_textfield.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/other/generate_button.dart';
+import 'package:qr_code_app/features/result_screen/presentation/result_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/enums/result_screen.dart';

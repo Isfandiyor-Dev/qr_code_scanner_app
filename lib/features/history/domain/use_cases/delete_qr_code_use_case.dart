@@ -1,4 +1,4 @@
-import 'package:qr_code_scanner_app/features/history/domain/repositories/history_repository.dart';
+import 'package:qr_code_app/features/history/domain/repositories/history_repository.dart';
 
 /// Use case that deletes a QR history entry.
 class DeleteQrCodeUseCase {

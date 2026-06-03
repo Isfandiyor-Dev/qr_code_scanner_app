@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/camera_cubit/camera_control_cubit.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/camera_cubit/camera_control_state.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_bloc.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_event.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/size_scanner/overlay_cubit.dart';
-import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/widgets/zoom_slider.dart';
-import 'package:qr_code_scanner_app/core/di/di.dart';
-import 'package:qr_code_scanner_app/core/services/scan_feedback_service.dart';
-import 'package:qr_code_scanner_app/features/settings/presentation/screens/settings.dart';
-import 'package:qr_code_scanner_app/gen/assets.gen.dart';
+import 'package:qr_code_app/core/enums/result_screen.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/widgets/snackbar.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/bloc/camera_cubit/camera_control_cubit.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/bloc/camera_cubit/camera_control_state.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_bloc.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_event.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/bloc/size_scanner/overlay_cubit.dart';
+import 'package:qr_code_app/features/result_screen/presentation/result_page.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/widgets/zoom_slider.dart';
+import 'package:qr_code_app/core/di/di.dart';
+import 'package:qr_code_app/core/services/scan_feedback_service.dart';
+import 'package:qr_code_app/features/settings/presentation/screens/settings.dart';
+import 'package:qr_code_app/gen/assets.gen.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
 
 /// Camera-based QR scanner screen with gallery import and zoom controls.
@@ -143,8 +143,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                        color: context.colorScheme.secondary
-                            .withValues(alpha: 0.6),
+                        color: context.colorScheme.secondary.withValues(alpha: 0.6),
                         blurRadius: 10,
                       )
                     ]),
@@ -166,9 +165,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                           },
                           icon: Icon(
                             Icons.flash_on_rounded,
-                            color: state.isTorchOn
-                                ? context.colorScheme.primary
-                                : Colors.white,
+                            color: state.isTorchOn ? context.colorScheme.primary : Colors.white,
                           ),
                         );
                       },
@@ -181,9 +178,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                           },
                           icon: Icon(
                             CupertinoIcons.camera_rotate_fill,
-                            color: state.isMainCamera
-                                ? Colors.white
-                                : context.colorScheme.primary,
+                            color: state.isMainCamera ? Colors.white : context.colorScheme.primary,
                           ),
                         );
                       },

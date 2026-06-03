@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// Signature used by generated form fields to validate text input.
 typedef FieldValidator = String? Function(String? value);
@@ -54,14 +54,12 @@ class CustomTextField extends StatelessWidget {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: validator,
           decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
             fillColor: context.colorScheme.primaryContainer,
             filled: true,
             hintText: hintText,
             hintStyle: context.textTheme.bodyLarge?.copyWith(
-              color:
-                  context.colorScheme.onPrimaryContainer.withValues(alpha: 0.5),
+              color: context.colorScheme.onPrimaryContainer.withValues(alpha: 0.5),
             ),
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
@@ -81,9 +79,9 @@ class CustomTextField extends StatelessWidget {
                 width: 1,
               ),
             ),
-            focusedBorder: const OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: Colors.amber,
+                color: context.colorScheme.primary,
                 width: 1,
               ),
             ),

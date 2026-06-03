@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// A single rounded card in the "Settings" section: a leading amber icon, a
 /// title + subtitle, and a trailing switch.
@@ -73,8 +73,7 @@ class SettingToggleCard extends StatelessWidget {
                 activeTrackColor: colorScheme.primary,
                 inactiveThumbColor: const Color(0xFFBDBDBD),
                 inactiveTrackColor: const Color(0xFF555759),
-                trackOutlineColor:
-                    const WidgetStatePropertyAll(Colors.transparent),
+                trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
               ),
             ],
           ),

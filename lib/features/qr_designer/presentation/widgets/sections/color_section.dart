@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 import '../../cubit/qr_customization_cubit.dart';
 import '../../cubit/qr_customization_state.dart';
@@ -42,9 +42,7 @@ class _ColorSectionState extends State<ColorSection> {
       context,
       initialColor: Color(initial),
       recentColors: recentColors.map((value) => Color(value)).toList(),
-      title: _target == _ColorTarget.foreground
-          ? 'Foreground color'
-          : 'Background color',
+      title: _target == _ColorTarget.foreground ? 'Foreground color' : 'Background color',
       enableOpacity: false,
     );
     if (picked != null) _apply(cubit, picked.toARGB32());
@@ -57,9 +55,8 @@ class _ColorSectionState extends State<ColorSection> {
       builder: (context, state) {
         final cubit = context.read<QrCustomizationCubit>();
         final config = state.config;
-        final activeColor = _target == _ColorTarget.foreground
-            ? config.foregroundColor
-            : config.backgroundColor;
+        final activeColor =
+            _target == _ColorTarget.foreground ? config.foregroundColor : config.backgroundColor;
 
         return Column(
           children: [
@@ -147,8 +144,7 @@ class _ColorSectionState extends State<ColorSection> {
                 foregroundColor: context.colorScheme.onSurface,
                 minimumSize: const Size.fromHeight(50),
                 side: BorderSide(
-                  color:
-                      context.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                  color: context.colorScheme.outlineVariant.withValues(alpha: 0.5),
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
@@ -223,8 +219,7 @@ class _CustomColorButton extends StatelessWidget {
             width: 1.4,
           ),
         ),
-        child:
-            Icon(Icons.palette_outlined, color: colorScheme.primary, size: 22),
+        child: Icon(Icons.palette_outlined, color: colorScheme.primary, size: 22),
       ),
     );
   }
@@ -294,8 +289,7 @@ class _ColorDot extends StatelessWidget {
                   color: colorScheme.surface,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.star_rounded,
-                    size: 13, color: colorScheme.primary),
+                child: Icon(Icons.star_rounded, size: 13, color: colorScheme.primary),
               ),
             ),
         ],

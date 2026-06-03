@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/gen/fonts.gen.dart';
+import 'package:qr_code_app/gen/fonts.gen.dart';
 
 /// Centralized text theme factory for the application.
 class AppTextStyles {

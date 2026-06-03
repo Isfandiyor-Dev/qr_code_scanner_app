@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/core/di/di.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_media_query_size_extension.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/core/services/qr_image_service.dart';
-import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
+import 'package:qr_code_app/core/di/di.dart';
+import 'package:qr_code_app/core/extensions/context/app_media_query_size_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/services/qr_image_service.dart';
+import 'package:qr_code_app/core/widgets/snackbar.dart';
 
 import '../../data_source/models/qr_design_config.dart';
 import '../cubit/qr_customization_cubit.dart';
@@ -36,8 +36,7 @@ class QrDesignEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<QrCustomizationCubit>(
-      create: (_) => getIt<QrCustomizationCubit>()
-        ..start(code: code, initial: initialConfig),
+      create: (_) => getIt<QrCustomizationCubit>()..start(code: code, initial: initialConfig),
       child: _QrDesignEditView(data: data),
     );
   }
@@ -100,8 +99,7 @@ class _QrDesignEditViewState extends State<_QrDesignEditView> {
                   Expanded(
                     child: Text(
                       'Save changes?',
-                      style: context.textTheme.titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
+                      style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                   IconButton(
@@ -123,14 +121,12 @@ class _QrDesignEditViewState extends State<_QrDesignEditView> {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () =>
-                          Navigator.of(dialogContext).pop(_LeaveAction.discard),
+                      onPressed: () => Navigator.of(dialogContext).pop(_LeaveAction.discard),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size.fromHeight(50),
                         foregroundColor: colorScheme.onSurface,
                         side: BorderSide(
-                          color:
-                              colorScheme.outlineVariant.withValues(alpha: 0.5),
+                          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
@@ -142,8 +138,7 @@ class _QrDesignEditViewState extends State<_QrDesignEditView> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton(
-                      onPressed: () =>
-                          Navigator.of(dialogContext).pop(_LeaveAction.save),
+                      onPressed: () => Navigator.of(dialogContext).pop(_LeaveAction.save),
                       style: FilledButton.styleFrom(
                         minimumSize: const Size.fromHeight(50),
                         backgroundColor: colorScheme.primary,
@@ -166,8 +161,7 @@ class _QrDesignEditViewState extends State<_QrDesignEditView> {
 
   /// Downloads the current (possibly unsaved) design via the shared service, so
   /// the permission + capture + feedback flow matches the result screen exactly.
-  Future<void> _download() =>
-      QrImageService.saveToGallery(context, _previewKey);
+  Future<void> _download() => QrImageService.saveToGallery(context, _previewKey);
 
   @override
   Widget build(BuildContext context) {
@@ -256,8 +250,7 @@ class _QrDesignEditViewState extends State<_QrDesignEditView> {
         options: const [
           SegmentedOption(value: 0, label: 'QR', icon: Icons.qr_code_2_rounded),
           SegmentedOption(value: 1, label: 'Logo', icon: Icons.image_rounded),
-          SegmentedOption(
-              value: 2, label: 'Colors', icon: Icons.palette_rounded),
+          SegmentedOption(value: 2, label: 'Colors', icon: Icons.palette_rounded),
         ],
       ),
     );
@@ -283,14 +276,16 @@ class _QrDesignEditViewState extends State<_QrDesignEditView> {
                 onPressed: _download,
                 style: OutlinedButton.styleFrom(
                   minimumSize: const Size.fromHeight(54),
-                  foregroundColor: colorScheme.primary,
+                  foregroundColor: colorScheme.onSurface,
                   side: BorderSide(color: colorScheme.primary, width: 1.3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
                 icon: const Icon(Icons.file_download_rounded),
-                label: const Text('Download'),
+                label: const Text(
+                  'Download',
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -300,7 +295,6 @@ class _QrDesignEditViewState extends State<_QrDesignEditView> {
                 style: FilledButton.styleFrom(
                   minimumSize: const Size.fromHeight(54),
                   backgroundColor: colorScheme.primary,
-                  foregroundColor: colorScheme.secondary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -309,7 +303,6 @@ class _QrDesignEditViewState extends State<_QrDesignEditView> {
                 label: Text(
                   'Save',
                   style: context.textTheme.labelLarge?.copyWith(
-                    color: colorScheme.secondary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

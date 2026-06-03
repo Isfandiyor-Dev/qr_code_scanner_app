@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:qr_code_scanner_app/core/utils/qr_content_parser.dart';
-import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
+import 'package:qr_code_app/core/utils/qr_content_parser.dart';
+import 'package:qr_code_app/core/widgets/snackbar.dart';
 import 'package:uuid/uuid.dart';
 
 /// Imports a contact encoded in a QR code into the device address book.
@@ -19,8 +19,7 @@ class ContactService {
     final vCard = QrContentParser.normalizeToVCard(qrData);
     if (vCard == null) {
       if (context.mounted) {
-        showErrorSnackBar(
-            'This QR code is not a valid contact format.', context);
+        showErrorSnackBar('This QR code is not a valid contact format.', context);
       }
       return;
     }
@@ -42,8 +41,7 @@ class ContactService {
         );
       }
     } catch (_) {
-      if (context.mounted)
-        showErrorSnackBar('Error importing contact', context);
+      if (context.mounted) showErrorSnackBar('Error importing contact', context);
     }
   }
 }

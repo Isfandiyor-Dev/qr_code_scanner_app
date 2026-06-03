@@ -1,11 +1,11 @@
-import 'package:qr_code_scanner_app/features/history/data_source/models/gen_box/gen_box_model.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/business_container.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/contact_container.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/event_container.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/location_container.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/single_field_container.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/widgets/containers/wifi_container.dart';
-import 'package:qr_code_scanner_app/gen/assets.gen.dart';
+import 'package:qr_code_app/features/history/data_source/models/gen_box/gen_box_model.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/containers/business_container.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/containers/contact_container.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/containers/event_container.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/containers/location_container.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/containers/single_field_container.dart';
+import 'package:qr_code_app/features/generate/presentation/widgets/containers/wifi_container.dart';
+import 'package:qr_code_app/gen/assets.gen.dart';
 
 /// Provides the available QR generation templates shown on the Generate screen.
 class GenQrTypes {

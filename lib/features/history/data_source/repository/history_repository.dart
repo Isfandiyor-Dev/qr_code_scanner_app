@@ -1,6 +1,6 @@
-import 'package:qr_code_scanner_app/features/history/data_source/models/scan_qr/scan_qr_model.dart';
-import 'package:qr_code_scanner_app/features/history/data_source/data_source/history_data_source.dart';
-import 'package:qr_code_scanner_app/features/history/domain/repositories/history_repository.dart';
+import 'package:qr_code_app/features/history/data_source/models/scan_qr/scan_qr_model.dart';
+import 'package:qr_code_app/features/history/data_source/data_source/history_data_source.dart';
+import 'package:qr_code_app/features/history/domain/repositories/history_repository.dart';
 import '../models/scan_qr/scan_qr_request.dart';
 
 /// Default [IHistoryRepository] implementation backed by [HistoryDataSource].

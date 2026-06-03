@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/zoom_slider/zoom_camera_cubit.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/bloc/zoom_slider/zoom_camera_cubit.dart';
 
 /// Slider control that adjusts the [MobileScannerController] zoom level.
 class MyZoomSlider extends StatefulWidget {
@@ -42,8 +42,7 @@ class _MyZoomSliderState extends State<MyZoomSlider> {
                     value: zoom,
                     min: 0,
                     max: 100,
-                    label:
-                        '${(zoom == 0 ? zoom + 1 : zoom).toStringAsFixed(0)}%',
+                    label: '${(zoom == 0 ? zoom + 1 : zoom).toStringAsFixed(0)}%',
                     thumbColor: context.colorScheme.primary,
                     activeColor: context.colorScheme.primary,
                     onChanged: (value) {

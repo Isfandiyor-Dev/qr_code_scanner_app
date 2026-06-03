@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history_cubit/history_cubit.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/widgets/create_list.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/widgets/scan_list.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history_cubit/history_cubit.dart';
+import 'package:qr_code_app/features/history/presentation/widgets/create_list.dart';
+import 'package:qr_code_app/features/history/presentation/widgets/scan_list.dart';
 
 /// Displays scanned and generated QR history in separate tabs.
 class QrHistoryPage extends StatefulWidget {
@@ -45,13 +45,12 @@ class _QrHistoryPageState extends State<QrHistoryPage> {
                     borderRadius: BorderRadius.circular(12),
                     gradient: const LinearGradient(
                       colors: [
-                        Color(0xffFDB623),
-                        Color(0xFFBE891D),
-                        Color(0xff735D2E),
+                        Color(0xff6366F1),
+                        Color(0xFF4749CC),
+                        Color(0xFF25278E),
                       ],
                     ),
                   ),
-                  indicatorColor: Colors.amber,
                   labelColor: Colors.white,
                   unselectedLabelColor: Color(0xffD9D9D9),
                   indicatorSize: TabBarIndicatorSize.tab,

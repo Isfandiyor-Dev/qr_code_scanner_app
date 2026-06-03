@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 import '../color/color_picker_sheet.dart';
 
@@ -48,9 +48,7 @@ class ColorPickerField extends StatelessWidget {
         child: Row(
           children: [
             if (icon != null) ...[
-              Icon(icon,
-                  size: 17,
-                  color: colorScheme.onSurface.withValues(alpha: 0.7)),
+              Icon(icon, size: 17, color: colorScheme.onSurface.withValues(alpha: 0.7)),
               const SizedBox(width: 8),
             ],
             Expanded(

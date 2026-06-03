@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../utils/icon_catalog.dart';
@@ -93,8 +93,7 @@ class LogoIconGrid extends StatelessWidget {
             children: [
               for (var j = 0; j < chunk.length; j++)
                 Padding(
-                  padding:
-                      EdgeInsets.only(bottom: j == chunk.length - 1 ? 0 : _gap),
+                  padding: EdgeInsets.only(bottom: j == chunk.length - 1 ? 0 : _gap),
                   child: chunk[j],
                 ),
             ],
@@ -144,9 +143,8 @@ class _IconCell extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: selected
-                ? colorScheme.primary
-                : colorScheme.outlineVariant.withValues(alpha: 0.2),
+            color:
+                selected ? colorScheme.primary : colorScheme.outlineVariant.withValues(alpha: 0.2),
             width: selected ? 2.5 : 1,
           ),
           boxShadow: selected

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/camera_cubit/camera_control_state.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/bloc/camera_cubit/camera_control_state.dart';
 
 /// Controls camera-facing state for the scanner screen.
 class CameraControlCubit extends Cubit<CameraControlState> {

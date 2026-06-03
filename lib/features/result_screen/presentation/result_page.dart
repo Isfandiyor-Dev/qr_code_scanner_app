@@ -4,20 +4,20 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:qr_code_scanner_app/core/di/di.dart';
-import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
-import 'package:qr_code_scanner_app/core/services/contact_service.dart';
-import 'package:qr_code_scanner_app/core/services/qr_image_service.dart';
-import 'package:qr_code_scanner_app/core/services/wifi_settings_service.dart';
-import 'package:qr_code_scanner_app/core/utils/qr_content_parser.dart';
-import 'package:qr_code_scanner_app/core/widgets/back_widget.dart';
-import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
-import 'package:qr_code_scanner_app/features/qr_designer/presentation/cubit/qr_customization_cubit.dart';
-import 'package:qr_code_scanner_app/features/qr_designer/presentation/cubit/qr_customization_state.dart';
-import 'package:qr_code_scanner_app/features/qr_designer/presentation/screens/qr_design_edit_page.dart';
-import 'package:qr_code_scanner_app/features/qr_designer/presentation/widgets/designer_qr_preview.dart';
-import 'package:qr_code_scanner_app/features/qr_designer/presentation/widgets/result_action_buttons.dart';
-import 'package:qr_code_scanner_app/features/root/presentation/screens/screens_manager.dart';
+import 'package:qr_code_app/core/di/di.dart';
+import 'package:qr_code_app/core/enums/result_screen.dart';
+import 'package:qr_code_app/core/services/contact_service.dart';
+import 'package:qr_code_app/core/services/qr_image_service.dart';
+import 'package:qr_code_app/core/services/wifi_settings_service.dart';
+import 'package:qr_code_app/core/utils/qr_content_parser.dart';
+import 'package:qr_code_app/core/widgets/back_widget.dart';
+import 'package:qr_code_app/core/widgets/snackbar.dart';
+import 'package:qr_code_app/features/qr_designer/presentation/cubit/qr_customization_cubit.dart';
+import 'package:qr_code_app/features/qr_designer/presentation/cubit/qr_customization_state.dart';
+import 'package:qr_code_app/features/qr_designer/presentation/screens/qr_design_edit_page.dart';
+import 'package:qr_code_app/features/qr_designer/presentation/widgets/designer_qr_preview.dart';
+import 'package:qr_code_app/features/qr_designer/presentation/widgets/result_action_buttons.dart';
+import 'package:qr_code_app/features/root/presentation/screens/screens_manager.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -205,8 +205,7 @@ class _ResultPageState extends State<ResultPage> {
               Center(
                 child: BlocBuilder<QrCustomizationCubit, QrCustomizationState>(
                   bloc: _designCubit,
-                  buildWhen: (previous, current) =>
-                      previous.config != current.config,
+                  buildWhen: (previous, current) => previous.config != current.config,
                   builder: (context, state) {
                     return FittedBox(
                       fit: BoxFit.scaleDown,
@@ -224,8 +223,7 @@ class _ResultPageState extends State<ResultPage> {
               const Gap(28),
               ResultActionButtons(
                 onEdit: _openEditor,
-                onDownload: () =>
-                    QrImageService.saveToGallery(context, _previewKey),
+                onDownload: () => QrImageService.saveToGallery(context, _previewKey),
                 onShare: () => QrImageService.shareImage(context, _previewKey),
               ),
               const Gap(40),

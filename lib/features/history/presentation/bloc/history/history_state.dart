@@ -1,4 +1,4 @@
-import 'package:qr_code_scanner_app/features/history/data_source/models/scan_qr/scan_qr_model.dart';
+import 'package:qr_code_app/features/history/data_source/models/scan_qr/scan_qr_model.dart';
 
 /// Base class for QR history states.
 sealed class HistoryState {}

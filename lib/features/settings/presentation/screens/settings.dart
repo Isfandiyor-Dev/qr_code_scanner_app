@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:qr_code_scanner_app/core/di/di.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/core/widgets/back_widget.dart';
-import 'package:qr_code_scanner_app/features/settings/presentation/cubit/settings_cubit.dart';
-import 'package:qr_code_scanner_app/features/settings/presentation/cubit/settings_state.dart';
-import 'package:qr_code_scanner_app/features/settings/presentation/widgets/setting_toggle_card.dart';
-import 'package:qr_code_scanner_app/features/settings/presentation/widgets/support_tile.dart';
+import 'package:qr_code_app/core/di/di.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/widgets/back_widget.dart';
+import 'package:qr_code_app/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:qr_code_app/features/settings/presentation/cubit/settings_state.dart';
+import 'package:qr_code_app/features/settings/presentation/widgets/setting_toggle_card.dart';
+import 'package:qr_code_app/features/settings/presentation/widgets/support_tile.dart';
 
 /// Settings page for scan feedback preferences and support links.
 class SettingsScreen extends StatelessWidget {
@@ -63,9 +63,9 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const Gap(36),
 
-                const _SectionTitle('Support'),
-                const Gap(16),
-                const _SupportCard(),
+                // const _SectionTitle('Support'),
+                // const Gap(16),
+                // const _SupportCard(),
               ],
             ),
           ),
@@ -86,7 +86,6 @@ class _SectionTitle extends StatelessWidget {
     return Text(
       text,
       style: context.textTheme.headlineSmall?.copyWith(
-        color: context.colorScheme.primary,
         fontWeight: FontWeight.w600,
         fontSize: 22,
         letterSpacing: 0.2,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/core/di/di.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_bloc.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history_cubit/history_cubit.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/size_scanner/overlay_cubit.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/bloc/zoom_slider/zoom_camera_cubit.dart';
-import 'package:qr_code_scanner_app/features/root/presentation/bloc/navigation_bar/navigation_bar_cubit.dart';
+import 'package:qr_code_app/core/di/di.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_bloc.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history_cubit/history_cubit.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/bloc/size_scanner/overlay_cubit.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/bloc/zoom_slider/zoom_camera_cubit.dart';
+import 'package:qr_code_app/features/root/presentation/bloc/navigation_bar/navigation_bar_cubit.dart';
 
 /// Provides the application-wide blocs and cubits used by the main navigation.
 class BlocScope extends StatelessWidget {

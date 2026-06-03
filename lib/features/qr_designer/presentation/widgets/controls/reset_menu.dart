@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/widgets/snackbar.dart';
 
 import '../../cubit/qr_customization_cubit.dart';
 
@@ -65,8 +65,7 @@ Future<void> showQrResetMenu(BuildContext context) {
               },
             ),
             Divider(
-              color: sheetContext.colorScheme.outlineVariant
-                  .withValues(alpha: 0.3),
+              color: sheetContext.colorScheme.outlineVariant.withValues(alpha: 0.3),
               indent: 20,
               endIndent: 20,
             ),
@@ -81,8 +80,7 @@ Future<void> showQrResetMenu(BuildContext context) {
                 if (confirmed) {
                   cubit.resetEverything();
                   if (context.mounted) {
-                    showMessageSnackBar(
-                        'Everything reset to defaults', context);
+                    showMessageSnackBar('Everything reset to defaults', context);
                   }
                 }
               },
@@ -146,8 +144,7 @@ class _ResetTile extends StatelessWidget {
 
     return ListTile(
       onTap: onTap,
-      leading:
-          Icon(icon, color: danger ? colorScheme.error : colorScheme.primary),
+      leading: Icon(icon, color: danger ? colorScheme.error : colorScheme.primary),
       title: Text(
         title,
         style: context.textTheme.bodyLarge?.copyWith(

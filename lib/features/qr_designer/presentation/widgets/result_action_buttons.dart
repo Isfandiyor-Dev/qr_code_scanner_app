@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
 
 /// The result-screen action row: a prominent **Edit** button (icon + text)
 /// followed by compact filled **Download** and **Share** buttons.
@@ -26,7 +26,6 @@ class ResultActionButtons extends StatelessWidget {
             onPressed: onEdit,
             style: FilledButton.styleFrom(
               backgroundColor: colorScheme.primary,
-              foregroundColor: colorScheme.secondary,
               minimumSize: const Size.fromHeight(60),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),
@@ -36,7 +35,6 @@ class ResultActionButtons extends StatelessWidget {
             label: Text(
               'Edit',
               style: context.textTheme.titleMedium?.copyWith(
-                color: colorScheme.secondary,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -80,7 +78,6 @@ class _CompactAction extends StatelessWidget {
         onPressed: onPressed,
         style: FilledButton.styleFrom(
           backgroundColor: colorScheme.primaryContainer.withValues(alpha: 0.9),
-          foregroundColor: colorScheme.primary,
           fixedSize: const Size(60, 60),
           padding: EdgeInsets.zero,
           shape: RoundedRectangleBorder(

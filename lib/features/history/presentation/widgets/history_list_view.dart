@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:intl/intl.dart';
-import 'package:qr_code_scanner_app/core/enums/result_screen.dart';
-import 'package:qr_code_scanner_app/features/history/data_source/models/scan_qr/scan_qr_model.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_bloc.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/bloc/history/history_event.dart';
-import 'package:qr_code_scanner_app/features/result_screen/presentation/result_page.dart';
-import 'package:qr_code_scanner_app/gen/assets.gen.dart';
+import 'package:qr_code_app/core/enums/result_screen.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/features/history/data_source/models/scan_qr/scan_qr_model.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_bloc.dart';
+import 'package:qr_code_app/features/history/presentation/bloc/history/history_event.dart';
+import 'package:qr_code_app/features/result_screen/presentation/result_page.dart';
+import 'package:qr_code_app/gen/assets.gen.dart';
 
 /// Animated list of QR history entries.
 class HistoryListView extends StatelessWidget {
@@ -46,11 +47,10 @@ class HistoryListView extends StatelessWidget {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 25, 25, 25)
-                          .withValues(alpha: .6),
+                      color: context.colorScheme.tertiaryFixed,
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF0A0A0A).withValues(alpha: .33),
+                          color: context.colorScheme.tertiaryFixedDim.withValues(alpha: .33),
                           blurRadius: 12,
                         )
                       ],
@@ -59,9 +59,10 @@ class HistoryListView extends StatelessWidget {
                     clipBehavior: Clip.hardEdge,
                     margin: const EdgeInsets.symmetric(vertical: 5),
                     child: ListTile(
-                      leading: Image.asset(
-                        Assets.icons.historyItemLeading.path,
-                        width: 30,
+                      leading: Icon(
+                        Icons.qr_code_scanner_rounded,
+                        size: 35,
+                        color: context.colorScheme.primary,
                       ),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,17 +79,14 @@ class HistoryListView extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () async {
-                              final confirmed =
-                                  await _confirmDelete(context, qrCode.code);
+                              final confirmed = await _confirmDelete(context, qrCode.code);
                               if ((confirmed ?? false) && context.mounted) {
-                                context
-                                    .read<HistoryBloc>()
-                                    .add(DeleteHistoryEvent(id: qrCode.id));
+                                context.read<HistoryBloc>().add(DeleteHistoryEvent(id: qrCode.id));
                               }
                             },
                             child: const Icon(
                               Icons.delete,
-                              color: Color(0xffFDB623),
+                              color: Color(0xff6366F1),
                               size: 22,
                             ),
                           ),
@@ -105,8 +103,7 @@ class HistoryListView extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            DateFormat('dd/MM/yyyy HH:mm')
-                                .format(qrCode.scannedAt),
+                            DateFormat('dd/MM/yyyy HH:mm').format(qrCode.scannedAt),
                             style: const TextStyle(
                               color: Colors.white24,
                               fontSize: 12,

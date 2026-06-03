@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qr_code_scanner_app/core/extensions/context/app_text_theme_extension.dart';
-import 'package:qr_code_scanner_app/features/root/presentation/bloc/navigation_bar/navigation_bar_cubit.dart';
-import 'package:qr_code_scanner_app/features/generate/presentation/screens/generate_page.dart';
-import 'package:qr_code_scanner_app/features/history/presentation/screens/history_page.dart';
-import 'package:qr_code_scanner_app/features/qr_scanner/presentation/screens/scanner_page.dart';
-import 'package:qr_code_scanner_app/gen/assets.gen.dart';
+import 'package:qr_code_app/core/extensions/context/app_text_theme_extension.dart';
+import 'package:qr_code_app/features/root/presentation/bloc/navigation_bar/navigation_bar_cubit.dart';
+import 'package:qr_code_app/features/generate/presentation/screens/generate_page.dart';
+import 'package:qr_code_app/features/history/presentation/screens/history_page.dart';
+import 'package:qr_code_app/features/qr_scanner/presentation/screens/scanner_page.dart';
+import 'package:qr_code_app/gen/assets.gen.dart';
 
 /// Root shell that switches between Scanner, Generate, and History screens.
 class ScreensManager extends StatefulWidget {
@@ -147,8 +147,7 @@ class _MyBottomBarItemState extends State<MyBottomBarItem> {
                     ? context.colorScheme.primary
                     : context.colorScheme.onPrimaryContainer,
                 fontSize: widget.isSelected ? 12 : 11,
-                fontWeight:
-                    widget.isSelected ? FontWeight.w600 : FontWeight.normal,
+                fontWeight: widget.isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
             ),
           ],

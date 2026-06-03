@@ -8,8 +8,8 @@ import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:qr_code_scanner_app/core/widgets/loading_dialog.dart';
-import 'package:qr_code_scanner_app/core/widgets/snackbar.dart';
+import 'package:qr_code_app/core/widgets/loading_dialog.dart';
+import 'package:qr_code_app/core/widgets/snackbar.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 
@@ -31,8 +31,7 @@ class QrImageService {
     GlobalKey previewKey, {
     double pixelRatio = 4.0,
   }) async {
-    final boundary =
-        previewKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+    final boundary = previewKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
     if (boundary == null) return null;
     final image = await boundary.toImage(pixelRatio: pixelRatio);
     final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
